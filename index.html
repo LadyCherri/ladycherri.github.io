@@ -1,33 +1,44 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9478029850185028"
      crossorigin="anonymous"></script>
-<!--
+  <!--
   Copyright (c) 2026 Lady Cherri. All rights reserved.
   This code is provided for viewing purposes only as part of ladycherri's
   personal website. Copying, redistributing, or reusing this code (in whole
   or in part) without prior written permission is not permitted.
--->
+   
+  Hey, hello! ;) kinda fancy seeing you there, what did you hope to find ?
+  Yeah, I know, boring, simple code... What can I say ? I'm a designer, not a coder,
+  and I don't think you are or you wouldn't be there haha
+  Oh well, I better make it worth your while so here's a little secret:
+  No, you're not crazy, there's an ARG in Tooditown :) i'm writing it from 2026. What
+  year is it for you ? Have you found the first clue yet ? 
+  Sometimes, the end is the start. You were so close since the beginning.
+  -->
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Videos Lady Cherri</title>
-<meta name="description" content="Les vidéos ASMR de Lady Cherri, à regarder direct sur le site.">
+<title>Lady Cherri</title>
+<meta name="description" content="Lady Cherri, game dev, ASMR & things that shouldn't be there.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
 
+  /* ============ TOKENS ============ */
   :root{
-    --blush:   #fbe6ef;
-    --blush-2: #f6d9e8;
-    --pink:    #ff6fa0;
-    --pink-deep:#ef4b85;
-    --wine:    #6f1f42;
-    --ink:     #2c1a24;
-    --lilac:   #b6a1de;
-    --cream:   #fff8fb;
-    --line:    #3a2230;
+    --blush:   #fbe6ef;   /* page background */
+    --blush-2: #f6d9e8;   /* secondary bg wash */
+    --pink:    #ff6fa0;   /* primary accent / title bars */
+    --pink-deep:#ef4b85;  /* hover state of pink */
+    --wine:    #6f1f42;   /* headings, deep contrast */
+    --ink:     #2c1a24;   /* body text */
+    --lilac:   #b6a1de;   /* secondary accent, pro section */
+    --cream:   #fff8fb;   /* card / window content bg */
+    --line:    #3a2230;   /* dark hairline used sparingly on chrome */
 
     --display: 'Silkscreen', monospace;
     --body:    'Quicksand', sans-serif;
@@ -52,6 +63,7 @@
     overflow-x:hidden;
   }
 
+  /* faint scanline film over everything, very low opacity */
   body::before{
     content:"";
     position:fixed; inset:0;
@@ -62,6 +74,7 @@
 
   a{ color:inherit; }
 
+  /* ============ AMBIENT FLOATERS ============ */
   .floaters{ position:fixed; inset:0; pointer-events:none; z-index:1; }
   .floaters span{
     position:absolute;
@@ -75,20 +88,29 @@
   .floaters span:nth-child(2){ top:60%; left:3%;  animation-delay:3s;   font-size:26px; color:var(--lilac); }
   .floaters span:nth-child(3){ top:20%; right:7%; animation-delay:1.5s; font-size:20px; }
   .floaters span:nth-child(4){ top:78%; right:10%;animation-delay:5s;   font-size:14px; color:var(--lilac); }
-  @keyframes drift{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-22px) rotate(8deg); } }
-  @media (prefers-reduced-motion: reduce){ .floaters span{ animation:none; } }
 
+  @keyframes drift{
+    0%,100%{ transform:translateY(0) rotate(0deg); }
+    50%{ transform:translateY(-22px) rotate(8deg); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .floaters span{ animation:none; }
+  }
+
+  /* ============ LAYOUT ============ */
   main{
     position:relative;
     z-index:2;
     max-width:760px;
     margin:0 auto;
-    padding:48px 20px 70px;
+    padding:56px 20px 80px;
     display:flex;
     flex-direction:column;
-    gap:22px;
+    gap:34px;
   }
 
+  /* ============ SIGNATURE: WINDOW CHROME ============ */
   .window{
     background:var(--cream);
     border:3px solid var(--line);
@@ -97,10 +119,12 @@
     transform:translateY(14px);
     animation:rise .6s ease forwards;
   }
-  .window:nth-of-type(2){ animation-delay:.1s; }
-  .window:nth-of-type(3){ animation-delay:.18s; }
-  .window:nth-of-type(4){ animation-delay:.24s; }
-  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+  .window + .window{ animation-delay:.12s; }
+  .marquee-wrap ~ .window{ animation-delay:.2s; }
+
+  @keyframes rise{
+    to{ opacity:1; transform:translateY(0); }
+  }
 
   .titlebar{
     background:linear-gradient(90deg, var(--pink) 0%, var(--pink-deep) 100%);
@@ -125,20 +149,30 @@
     font-size:9px; color:var(--wine); line-height:1;
   }
 
-  .window-body{ padding:26px; }
+  .window-body{ padding:28px 26px; }
 
-  .back-link{
-    display:inline-flex;
+  /* ============ HERO ============ */
+  .hero .window-body{
+    display:flex;
+    gap:28px;
     align-items:center;
-    gap:6px;
-    font-family:var(--mono);
-    font-size:11px;
-    text-decoration:none;
-    color:var(--wine);
-    margin-bottom:12px;
   }
-  .back-link:hover{ color:var(--pink-deep); }
+  .avatar-frame{
+    flex:0 0 auto;
+    width:150px;
+    border:3px solid var(--line);
+    box-shadow:4px 4px 0 rgba(111,31,66,.18);
+  }
+  .avatar-frame .titlebar{ font-size:9px; padding:5px 7px; }
+  .avatar-frame img{
+    display:block;
+    width:100%;
+    height:170px;
+    object-fit:cover;
+    filter:saturate(1.05) contrast(1.02);
+  }
 
+  .hero-text{ flex:1 1 auto; min-width:0; }
   .eyebrow{
     font-family:var(--mono);
     font-size:11px;
@@ -147,76 +181,87 @@
     color:var(--pink-deep);
     margin:0 0 8px;
   }
-  h1.pagetitle{
+  h1.namefield{
     font-family:var(--display);
-    font-size:clamp(26px, 6vw, 36px);
+    font-size:clamp(28px, 5.5vw, 42px);
     color:var(--wine);
-    margin:0 0 8px;
+    margin:0 0 10px;
+    line-height:1.1;
     text-shadow:2px 2px 0 rgba(255,111,160,.35);
   }
-  .lede{
-    font-size:15px;
+  .tagline{
+    font-size:16px;
     line-height:1.55;
-    margin:0;
-    max-width:52ch;
+    margin:0 0 14px;
+    max-width:44ch;
   }
-
-  /* ---- Player ---- */
-  .player-window .window-body{ padding:14px; }
-  .player-wrap{
-    position:relative;
-    width:100%;
-    aspect-ratio:16/9;
-    background:#000;
-    border:2px solid var(--line);
-    overflow:hidden;
-  }
-  .player-wrap iframe{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    border:0;
-  }
-
-  .now-playing{
+  .status-row{
     display:flex;
-    align-items:baseline;
-    justify-content:space-between;
-    gap:12px;
-    padding:12px 4px 2px;
+    align-items:center;
+    gap:14px;
     flex-wrap:wrap;
   }
-  .now-playing .title{
-    font-weight:700;
-    font-size:15px;
-  }
-  .now-playing .count{
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
     font-family:var(--mono);
     font-size:11px;
-    color:#7a5f6d;
-    white-space:nowrap;
+    background:var(--blush);
+    border:2px solid var(--line);
+    padding:4px 9px;
   }
+  .status-pill .dot{
+    width:7px; height:7px;
+    background:#59d98c;
+    border-radius:50%;
+    box-shadow:0 0 5px #59d98c;
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:.35;} }
 
-  /* ---- Ad slot ---- */
-  .ad-slot{
-    border:2px dashed var(--line);
-    background:rgba(255,255,255,.5);
-    color:#8a6a78;
+  .ig-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
     font-family:var(--mono);
     font-size:11px;
-    text-align:center;
-    padding:18px;
+    text-decoration:none;
+    color:var(--wine);
+    border:2px solid var(--line);
+    padding:4px 9px;
+    background:#fff;
+    transition:transform .15s ease, background .15s ease;
+  }
+  .ig-link:hover{ background:var(--pink); color:#fff8fb; transform:translate(-1px,-1px); }
+  .ig-link svg{ width:12px; height:12px; }
+
+  /* ============ SECTION HEADINGS ============ */
+  .section-eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--pink-deep);
+    margin:0 0 4px;
+  }
+  .section-title{
+    font-family:var(--display);
+    font-size:22px;
+    color:var(--wine);
+    margin:0 0 20px;
+  }
+  .casual .section-title{ color:var(--wine); }
+  .pro .section-title{ color:#4c3a75; }
+
+  /* ============ LINK GRID ============ */
+  .link-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
+    gap:14px;
   }
 
-  /* ---- Playlist ---- */
-  .playlist{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
-  }
-
-  .videocard{
+  .linkcard{
     display:flex;
     align-items:center;
     gap:12px;
@@ -224,56 +269,77 @@
     color:var(--ink);
     background:#fff;
     border:2px solid var(--line);
-    padding:8px;
+    padding:13px 14px;
     box-shadow:3px 3px 0 rgba(111,31,66,.14);
-    cursor:pointer;
     transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
-    text-align:left;
-    font-family:inherit;
-    width:100%;
   }
-  .videocard:hover{
+  .linkcard:hover{
     transform:translate(-2px,-2px);
     box-shadow:5px 5px 0 rgba(111,31,66,.22);
     background:var(--blush);
   }
-  .videocard.active{
-    background:var(--blush);
-    border-color:var(--pink-deep);
-  }
-  .videocard .thumb{
+  .pro .linkcard:hover{ background:#efe9fb; }
+
+  .linkcard .icon{
     flex:0 0 auto;
-    width:100px;
-    aspect-ratio:16/9;
-    object-fit:cover;
+    width:34px; height:34px;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--pink);
     border:2px solid var(--line);
-    background:#eee;
+    color:#fff8fb;
   }
-  .videocard .text{ min-width:0; flex:1; }
-  .videocard .label{
+  .pro .linkcard .icon{ background:var(--lilac); color:#2c1a24; }
+  .linkcard .icon svg{ width:18px; height:18px; }
+
+  .linkcard .text{ min-width:0; }
+  .linkcard .label{
     font-weight:600;
-    font-size:14px;
+    font-size:14.5px;
     display:block;
-    margin-bottom:3px;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    white-space:nowrap;
   }
-  .videocard .sub{
+  .linkcard .sub{
     font-family:var(--mono);
     font-size:10.5px;
     color:#7a5f6d;
     display:block;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
   }
-  .videocard .playing-tag{
-    flex:0 0 auto;
+  .linkcard .arrow{
+    margin-left:auto;
     font-family:var(--mono);
-    font-size:10px;
     color:var(--pink-deep);
-    display:none;
+    flex:0 0 auto;
   }
-  .videocard.active .playing-tag{ display:block; }
+  .pro .linkcard .arrow{ color:#4c3a75; }
 
+  /* ============ MARQUEE DIVIDER ============ */
+  .marquee-wrap{
+    overflow:hidden;
+    border:3px solid var(--line);
+    background:var(--wine);
+    padding:9px 0;
+  }
+  .marquee{
+    display:inline-block;
+    white-space:nowrap;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.08em;
+    color:#ffe3ee;
+    animation:scroll 18s linear infinite;
+    padding-left:100%;
+  }
+  @media (prefers-reduced-motion: reduce){
+    .marquee{ animation:none; padding-left:2%; }
+  }
+  @keyframes scroll{
+    0%{ transform:translateX(0); }
+    100%{ transform:translateX(-100%); }
+  }
+
+  /* ============ FOOTER ============ */
   footer{
     text-align:center;
     font-family:var(--mono);
@@ -283,12 +349,19 @@
   }
   footer .heart{ color:var(--pink-deep); }
 
+  /* ============ RESPONSIVE ============ */
   @media (max-width:560px){
-    .window-body{ padding:18px 16px; }
-    .videocard .thumb{ width:80px; }
+    .hero .window-body{ flex-direction:column; text-align:center; }
+    .hero-text{ width:100%; }
+    .tagline{ max-width:none; }
+    .status-row{ justify-content:center; }
+    .avatar-frame{ width:130px; }
+    .avatar-frame img{ height:150px; }
+    .window-body{ padding:22px 18px; }
   }
 
-  a:focus-visible, .videocard:focus-visible{
+  /* focus visibility */
+  a:focus-visible, .linkcard:focus-visible{
     outline:3px solid var(--wine);
     outline-offset:2px;
   }
@@ -302,117 +375,192 @@
 
   <main>
 
-    <header class="window">
+    <!-- HERO -->
+    <header class="window hero">
       <div class="titlebar">
-        <span class="name">ASMR.EXE</span>
+        <span class="name">LADYCHERRI.EXE</span>
         <span class="btns"><span>_</span><span>□</span><span>×</span></span>
       </div>
       <div class="window-body">
-        <a class="back-link" href="./index.html">← retour à l'accueil</a> 
-        <h1 class="pagetitle">IT'S CINEMA TIME ?!!!</h1>
-        <p class="lede">Watch directly here! Click on a video in the list to play it.</p>
+        <div class="avatar-frame"> 
+          <img src="avatar.png" alt="Lady Cherri looking at the camera, pink hair, round glasses">
+        </div>
+        <div class="hero-text">
+          <p class="eyebrow">welcome to my corner of the internet</p>
+          <h1 class="namefield">Lady Cherri</h1>
+          <p class="tagline">game dev, asmr & things that shouldn't be there ♡</p>
+          <div class="status-row">
+            <span class="status-pill"><span class="dot"></span>currently online</span>
+            <a class="ig-link" href="https://instagram.com/ladycherri_offi" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+              @ladycherri_offi
+            </a>
+          </div>
+        </div>
       </div>
     </header>
 
-    <!-- LECTEUR -->
-    <section class="window player-window">
+    <!-- CASUAL LINKS -->
+    <section class="window links-window casual">
       <div class="titlebar">
-        <span class="name">video-player.dat</span>
+        <span class="name">whats-new.txt</span>
         <span class="btns"><span>_</span><span>□</span><span>×</span></span>
       </div>
       <div class="window-body">
-        <div class="player-wrap">
-          <iframe id="ytPlayer"
-            src=""
-            title="Lecteur vidéo ASMR"
-            loading="lazy"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <div class="now-playing">
-          <span class="title" id="nowPlayingTitle">—</span>
-          <span class="count" id="videoCount"></span>
+        <h2 class="section-title">the fun stuff</h2>
+        <div class="link-grid">
+
+          <a class="linkcard" href="https://throne.com/ladycherricola" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 8h16l-1.5 11a2 2 0 0 1-2 2H7.5a2 2 0 0 1-2-2L4 8Z"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/><path d="M12 12v4"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">Throne Wishlist</span>
+              <span class="sub">support me!</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a>
+
+          <a class="linkcard" href="https://ladycherri.itch.io" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="12" rx="3"/><path d="M7 11v4M5 13h4"/><circle cx="16" cy="12.5" r="1"/><circle cx="18.5" cy="15" r="1"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">My games!!</span>
+              <span class="sub">ladycherri.itch.io</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a>
+
+          <a class="linkcard" href="https://www.youtube.com/@BunbunCherriAsmr" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3M9 21h6"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">bunbun cherri asmr</span>
+              <span class="sub">youtube.com/@BunbunCherriAsmr</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a>
+
+            <a class="linkcard" href="./Videos.html">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M10 9.5v5l4.5-2.5-4.5-2.5Z" fill="currentColor" stroke="none"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">Watch my videos!</span>
+              <span class="sub">Grab some popcorn and enjoy!</span>
+            </span>
+            <span class="arrow">↗</span>
+           </a>
+
+            <a class="linkcard" href="https://www.roblox.com/share?code=50cfe02f301ccd4b8bdaa6a87d1c485b&type=ExperienceDetails&stamp=1789522062452" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="11" rx="4"/><path d="M7 10.5v4M5 12.5h4"/><circle cx="15.5" cy="11.5" r="1"/><circle cx="18" cy="14" r="1"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">+1 melt per click</span> 
+               <span class="sub">My roblox game!</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a>
+        
+          <p class="section-eyebrow">Currently working on "+1 melt per click" on Roblox! Play now!</br>❮❮❮❮</p>  
+
+            <!-- <a class="linkcard" href="./ListeJeux.html" >
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="11" rx="4"/><path d="M7 10.5v4M5 12.5h4"/><circle cx="15.5" cy="11.5" r="1"/><circle cx="18" cy="14" r="1"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">Mini Games</span> 
+                <span class="sub">Halloween only</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a> -->
         </div>
       </div>
     </section>
 
-    <ins class="adsbygoogle"
-        style="display:block"
-        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-        data-ad-slot="1234567890"
-        data-ad-format="auto"
-        data-full-width-responsive="true"></ins>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
+    <!-- MARQUEE -->
+    <div class="marquee-wrap" aria-hidden="true">
+      <span class="marquee">✧ thank u for stopping by my corner of the internet ✧ never leave ✧ things that shouldn't be there ✧ thank u for stopping by my corner of the internet ✧ never leave ✧ things that shouldn't be there</span>
+    </div>
 
-    <!-- PLAYLIST -->
-    <section class="window">
+    <!-- PRO LINKS -->
+    <section class="window links-window pro">
       <div class="titlebar">
-        <span class="name">playlist.dir</span>
+        <span class="name">official-links.cfg</span>
         <span class="btns"><span>_</span><span>□</span><span>×</span></span>
       </div>
       <div class="window-body">
-        <div class="playlist" id="playlist"></div>
+        <p class="section-eyebrow">officially yours</p>
+        <h2 class="section-title">the professional bits</h2>
+        <div class="link-grid">
+
+          <a class="linkcard" href="https://ladycherri.itch.io" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="12" rx="3"/><path d="M7 11v4M5 13h4"/><circle cx="16" cy="12.5" r="1"/><circle cx="18.5" cy="15" r="1"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">itch.io</span>
+              <span class="sub">ladycherri.itch.io</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a>
+
+          <a class="linkcard" href="https://x.com/LadyCherri_" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l16 16M20 4 4 20"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">X / Twitter</span>
+              <span class="sub">x.com/LadyCherri_</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a>
+
+          <a class="linkcard" href="https://patreon.com/LadyCherri" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-4.35-9.5-8.5C.7 8.6 2.4 5 6 5c2 0 3.3 1 4 2 .7-1 2-2 4-2 3.6 0 5.3 3.6 3.5 7.5C19 16.65 12 21 12 21Z"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">Patreon</span>
+              <span class="sub">patreon.com/LadyCherri</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a>
+
+          <a class="linkcard" href="https://www.youtube.com/@LadyCherri" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3M9 21h6"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">YouTube</span>
+              <span class="sub">youtube.com/@LadyCherri</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a>
+
+          <a class="linkcard" href="https://ko-fi.com/ladycherri" target="_blank" rel="noopener">
+            <span class="icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h13v9a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V4Z"/><path d="M17 7h1.5a2.5 2.5 0 0 1 0 5H17"/></svg>
+            </span>
+            <span class="text">
+              <span class="label">Ko-fi</span>
+              <span class="sub">ko-fi.com/ladycherri</span>
+            </span>
+            <span class="arrow">↗</span>
+          </a>
+
+        </div>
       </div>
     </section>
 
     <footer>
-      made with <span class="heart">♡</span> by lady cherri
+      made with <span class="heart">♡</span> by lady cherri, 2026
     </footer>
 
   </main>
 
-<script>
-(function(){ 
-  // "id" = l'ID de la vidéo (dans l'URL youtube.com/watch?v=CET_ID_LA) 
-  const VIDEOS = [
-    { id: 'DOGvQYO81Mc', title: 'ASMR. 💗ྀི Cozy Pink Asmr 🌸˚˖⋆ ──★ yeti mic, layered sounds, lofi' },
-    { id: 'idl_Aoj4suw', title: 'ASMR. Halloween - Sorceress Shop (Layered sounds, crackling fire, RPG visuals...)' },
-    { id: 'JdcsQ2WcmSo', title: 'DO WHAT YOU WANT' },
-    { id: 'VIDEO_ID_4', title: 'Sons de pluie et pages qui tournent' }
-  ];
-
-  const playlistEl = document.getElementById('playlist');
-  const iframe = document.getElementById('ytPlayer');
-  const nowPlayingTitle = document.getElementById('nowPlayingTitle');
-  const videoCount = document.getElementById('videoCount');
-
-  function thumbUrl(id){
-    return 'https://i.ytimg.com/vi/' + encodeURIComponent(id) + '/mqdefault.jpg';
-  }
-
-  function playVideo(index){
-    const v = VIDEOS[index];
-    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(v.id) + '?autoplay=1&rel=0';
-    nowPlayingTitle.textContent = v.title;
-    videoCount.textContent = (index + 1) + ' / ' + VIDEOS.length;
-    document.querySelectorAll('.videocard').forEach((el, i)=>{
-      el.classList.toggle('active', i === index);
-    });
-  }
-
-  function buildPlaylist(){
-    playlistEl.innerHTML = '';
-    VIDEOS.forEach((v, i)=>{
-      const btn = document.createElement('button');
-      btn.className = 'videocard';
-      btn.innerHTML =
-        '<img class="thumb" src="' + thumbUrl(v.id) + '" alt="" loading="lazy">' +
-        '<span class="text">' +
-          '<span class="label">' + v.title + '</span>' +
-          '<span class="sub">vidéo ' + (i+1) + '</span>' +
-        '</span>' +
-        '<span class="playing-tag">▶ playing...</span>';
-      btn.addEventListener('click', ()=> playVideo(i));
-      playlistEl.appendChild(btn);
-    });
-  }
-
-  buildPlaylist();
-  if(VIDEOS.length){ playVideo(0); }
-})();
-</script>
 </body>
 </html>
