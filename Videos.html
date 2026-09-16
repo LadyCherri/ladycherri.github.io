@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
+     crossorigin="anonymous"></script>
+<!--
+  Copyright (c) 2026 Lady Cherri. All rights reserved.
+  This code is provided for viewing purposes only as part of ladycherri's
+  personal website. Copying, redistributing, or reusing this code (in whole
+  or in part) without prior written permission is not permitted.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Videos Lady Cherri</title>
+<meta name="description" content="Les vidéos ASMR de Lady Cherri, à regarder direct sur le site.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --blush:   #fbe6ef;
+    --blush-2: #f6d9e8;
+    --pink:    #ff6fa0;
+    --pink-deep:#ef4b85;
+    --wine:    #6f1f42;
+    --ink:     #2c1a24;
+    --lilac:   #b6a1de;
+    --cream:   #fff8fb;
+    --line:    #3a2230;
+
+    --display: 'Silkscreen', monospace;
+    --body:    'Quicksand', sans-serif;
+    --mono:    'Space Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 15% 8%, rgba(255,255,255,.55), transparent 40%),
+      radial-gradient(circle at 88% 82%, rgba(182,161,222,.25), transparent 45%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.35) 0px, rgba(255,255,255,.35) 1px, transparent 1px, transparent 26px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.35) 0px, rgba(255,255,255,.35) 1px, transparent 1px, transparent 26px),
+      linear-gradient(160deg, var(--blush) 0%, var(--blush-2) 100%);
+    color:var(--ink);
+    font-family:var(--body);
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(111,31,66,.035) 0px, rgba(111,31,66,.035) 1px, transparent 1px, transparent 3px);
+    z-index:50;
+  }
+
+  a{ color:inherit; }
+
+  .floaters{ position:fixed; inset:0; pointer-events:none; z-index:1; }
+  .floaters span{
+    position:absolute;
+    font-size:22px;
+    color:var(--pink);
+    opacity:.35;
+    animation:drift 14s ease-in-out infinite;
+    filter:drop-shadow(0 0 6px rgba(255,111,160,.4));
+  }
+  .floaters span:nth-child(1){ top:8%;  left:6%;  animation-delay:0s;   font-size:16px; }
+  .floaters span:nth-child(2){ top:60%; left:3%;  animation-delay:3s;   font-size:26px; color:var(--lilac); }
+  .floaters span:nth-child(3){ top:20%; right:7%; animation-delay:1.5s; font-size:20px; }
+  .floaters span:nth-child(4){ top:78%; right:10%;animation-delay:5s;   font-size:14px; color:var(--lilac); }
+  @keyframes drift{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-22px) rotate(8deg); } }
+  @media (prefers-reduced-motion: reduce){ .floaters span{ animation:none; } }
+
+  main{
+    position:relative;
+    z-index:2;
+    max-width:760px;
+    margin:0 auto;
+    padding:48px 20px 70px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+
+  .window{
+    background:var(--cream);
+    border:3px solid var(--line);
+    box-shadow: 6px 6px 0 rgba(111,31,66,.18);
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .6s ease forwards;
+  }
+  .window:nth-of-type(2){ animation-delay:.1s; }
+  .window:nth-of-type(3){ animation-delay:.18s; }
+  .window:nth-of-type(4){ animation-delay:.24s; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  .titlebar{
+    background:linear-gradient(90deg, var(--pink) 0%, var(--pink-deep) 100%);
+    color:#fff8fb;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:7px 10px;
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.06em;
+    border-bottom:3px solid var(--line);
+  }
+  .titlebar .name{ display:flex; align-items:center; gap:7px; }
+  .titlebar .name::before{ content:"❀"; font-size:11px; }
+  .titlebar .btns{ display:flex; gap:5px; }
+  .titlebar .btns span{
+    width:14px; height:14px;
+    background:var(--cream);
+    border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:9px; color:var(--wine); line-height:1;
+  }
+
+  .window-body{ padding:26px; }
+
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--mono);
+    font-size:11px;
+    text-decoration:none;
+    color:var(--wine);
+    margin-bottom:12px;
+  }
+  .back-link:hover{ color:var(--pink-deep); }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--pink-deep);
+    margin:0 0 8px;
+  }
+  h1.pagetitle{
+    font-family:var(--display);
+    font-size:clamp(26px, 6vw, 36px);
+    color:var(--wine);
+    margin:0 0 8px;
+    text-shadow:2px 2px 0 rgba(255,111,160,.35);
+  }
+  .lede{
+    font-size:15px;
+    line-height:1.55;
+    margin:0;
+    max-width:52ch;
+  }
+
+  /* ---- Player ---- */
+  .player-window .window-body{ padding:14px; }
+  .player-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    background:#000;
+    border:2px solid var(--line);
+    overflow:hidden;
+  }
+  .player-wrap iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+  }
+
+  .now-playing{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:12px;
+    padding:12px 4px 2px;
+    flex-wrap:wrap;
+  }
+  .now-playing .title{
+    font-weight:700;
+    font-size:15px;
+  }
+  .now-playing .count{
+    font-family:var(--mono);
+    font-size:11px;
+    color:#7a5f6d;
+    white-space:nowrap;
+  }
+
+  /* ---- Ad slot ---- */
+  .ad-slot{
+    border:2px dashed var(--line);
+    background:rgba(255,255,255,.5);
+    color:#8a6a78;
+    font-family:var(--mono);
+    font-size:11px;
+    text-align:center;
+    padding:18px;
+  }
+
+  /* ---- Playlist ---- */
+  .playlist{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .videocard{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    text-decoration:none;
+    color:var(--ink);
+    background:#fff;
+    border:2px solid var(--line);
+    padding:8px;
+    box-shadow:3px 3px 0 rgba(111,31,66,.14);
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+    text-align:left;
+    font-family:inherit;
+    width:100%;
+  }
+  .videocard:hover{
+    transform:translate(-2px,-2px);
+    box-shadow:5px 5px 0 rgba(111,31,66,.22);
+    background:var(--blush);
+  }
+  .videocard.active{
+    background:var(--blush);
+    border-color:var(--pink-deep);
+  }
+  .videocard .thumb{
+    flex:0 0 auto;
+    width:100px;
+    aspect-ratio:16/9;
+    object-fit:cover;
+    border:2px solid var(--line);
+    background:#eee;
+  }
+  .videocard .text{ min-width:0; flex:1; }
+  .videocard .label{
+    font-weight:600;
+    font-size:14px;
+    display:block;
+    margin-bottom:3px;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+  }
+  .videocard .sub{
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:#7a5f6d;
+    display:block;
+  }
+  .videocard .playing-tag{
+    flex:0 0 auto;
+    font-family:var(--mono);
+    font-size:10px;
+    color:var(--pink-deep);
+    display:none;
+  }
+  .videocard.active .playing-tag{ display:block; }
+
+  footer{
+    text-align:center;
+    font-family:var(--mono);
+    font-size:11px;
+    color:#8a6a78;
+    padding-top:6px;
+  }
+  footer .heart{ color:var(--pink-deep); }
+
+  @media (max-width:560px){
+    .window-body{ padding:18px 16px; }
+    .videocard .thumb{ width:80px; }
+  }
+
+  a:focus-visible, .videocard:focus-visible{
+    outline:3px solid var(--wine);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="floaters" aria-hidden="true">
+    <span>♡</span><span>✧</span><span>♡</span><span>✦</span>
+  </div>
+
+  <main>
+
+    <header class="window">
+      <div class="titlebar">
+        <span class="name">ASMR.EXE</span>
+        <span class="btns"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="window-body">
+        <a class="back-link" href="./index.html">← retour à l'accueil</a> 
+        <h1 class="pagetitle">IT'S CINEMA TIME ?!!!</h1>
+        <p class="lede">Watch directly here! Click on a video in the list to play it.</p>
+      </div>
+    </header>
+
+    <!-- LECTEUR -->
+    <section class="window player-window">
+      <div class="titlebar">
+        <span class="name">video-player.dat</span>
+        <span class="btns"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="window-body">
+        <div class="player-wrap">
+          <iframe id="ytPlayer"
+            src=""
+            title="Lecteur vidéo ASMR"
+            loading="lazy"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div class="now-playing">
+          <span class="title" id="nowPlayingTitle">—</span>
+          <span class="count" id="videoCount"></span>
+        </div>
+      </div>
+    </section>
+
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-slot="1234567890"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
+
+    <!-- PLAYLIST -->
+    <section class="window">
+      <div class="titlebar">
+        <span class="name">playlist.dir</span>
+        <span class="btns"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="window-body">
+        <div class="playlist" id="playlist"></div>
+      </div>
+    </section>
+
+    <footer>
+      made with <span class="heart">♡</span> by lady cherri
+    </footer>
+
+  </main>
+
+<script>
+(function(){
+  // ============================================================ 
+  // "id" = l'ID de la vidéo (dans l'URL youtube.com/watch?v=CET_ID_LA)
+  // "title" = le titre affiché sur le site
+  // ============================================================
+  const VIDEOS = [
+    { id: 'DOGvQYO81Mc', title: 'ASMR. 💗ྀི Cozy Pink Asmr 🌸˚˖⋆ ──★ yeti mic, layered sounds, lofi' },
+    { id: 'VIDEO_ID_2', title: 'Chuchotements et brossage de micro' },
+    { id: 'VIDEO_ID_3', title: 'Roleplay relaxant' },
+    { id: 'VIDEO_ID_4', title: 'Sons de pluie et pages qui tournent' }
+  ];
+
+  const playlistEl = document.getElementById('playlist');
+  const iframe = document.getElementById('ytPlayer');
+  const nowPlayingTitle = document.getElementById('nowPlayingTitle');
+  const videoCount = document.getElementById('videoCount');
+
+  function thumbUrl(id){
+    return 'https://i.ytimg.com/vi/' + encodeURIComponent(id) + '/mqdefault.jpg';
+  }
+
+  function playVideo(index){
+    const v = VIDEOS[index];
+    iframe.src = 'https://www.youtube.com/embed/' + encodeURIComponent(v.id) + '?autoplay=1&rel=0';
+    nowPlayingTitle.textContent = v.title;
+    videoCount.textContent = (index + 1) + ' / ' + VIDEOS.length;
+    document.querySelectorAll('.videocard').forEach((el, i)=>{
+      el.classList.toggle('active', i === index);
+    });
+  }
+
+  function buildPlaylist(){
+    playlistEl.innerHTML = '';
+    VIDEOS.forEach((v, i)=>{
+      const btn = document.createElement('button');
+      btn.className = 'videocard';
+      btn.innerHTML =
+        '<img class="thumb" src="' + thumbUrl(v.id) + '" alt="" loading="lazy">' +
+        '<span class="text">' +
+          '<span class="label">' + v.title + '</span>' +
+          '<span class="sub">vidéo ' + (i+1) + '</span>' +
+        '</span>' +
+        '<span class="playing-tag">▶ en cours</span>';
+      btn.addEventListener('click', ()=> playVideo(i));
+      playlistEl.appendChild(btn);
+    });
+  }
+
+  buildPlaylist();
+  if(VIDEOS.length){ playVideo(0); }
+})();
+</script>
+</body>
+</html>

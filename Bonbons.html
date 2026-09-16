@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!--
+  Copyright (c) 2026 Lady Cherri. All rights reserved.
+  This code is provided for viewing purposes only as part of ladycherri's
+  personal website. Copying, redistributing, or reusing this code (in whole
+  or in part) without prior written permission is not permitted.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>La Chasse aux Bonbons — Lady Cherri</title>
+<meta name="description" content="Mini jeu d'Halloween — attrape les bonbons, évite les fantômes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg-deep:  #0c0816;
+    --bg-mid:   #1c1330;
+    --panel:    #1f1733;
+    --panel-2:  #140e24;
+    --line:     #05030a;
+    --pumpkin:  #ff7a1a;
+    --pumpkin-d:#d9560f;
+    --moon:     #f4ead0;
+    --ink:      #e9e2f2;
+    --slime:    #7de08d;
+    --mist:     #7a6f92;
+
+    --display: 'Silkscreen', monospace;
+    --body:    'Quicksand', sans-serif;
+    --mono:    'Space Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 85% 6%, rgba(244,234,208,.10), transparent 40%),
+      radial-gradient(circle at 10% 85%, rgba(255,122,26,.08), transparent 45%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 26px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 26px),
+      linear-gradient(160deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
+    color:var(--ink);
+    font-family:var(--body);
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.06) 0px, rgba(0,0,0,.06) 1px, transparent 1px, transparent 3px);
+    z-index:50;
+  }
+
+  a{ color:inherit; }
+
+  .floaters{ position:fixed; inset:0; pointer-events:none; z-index:1; }
+  .floaters span{
+    position:absolute;
+    font-size:22px;
+    opacity:.4;
+    animation:drift 14s ease-in-out infinite;
+    filter:drop-shadow(0 0 6px rgba(255,122,26,.3));
+  }
+  .floaters span:nth-child(1){ top:8%;  left:6%;  animation-delay:0s;   font-size:16px; }
+  .floaters span:nth-child(2){ top:60%; left:3%;  animation-delay:3s;   font-size:24px; }
+  .floaters span:nth-child(3){ top:20%; right:7%; animation-delay:1.5s; font-size:20px; }
+  .floaters span:nth-child(4){ top:78%; right:10%;animation-delay:5s;   font-size:16px; }
+  @keyframes drift{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-22px) rotate(8deg); } }
+  @media (prefers-reduced-motion: reduce){ .floaters span{ animation:none; } }
+
+  main{
+    position:relative;
+    z-index:2;
+    max-width:600px;
+    margin:0 auto;
+    padding:48px 20px 70px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+
+  .window{
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow: 6px 6px 0 rgba(0,0,0,.4);
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .6s ease forwards;
+  }
+  .window:nth-of-type(2){ animation-delay:.1s; }
+  .window:nth-of-type(3){ animation-delay:.18s; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  .titlebar{
+    background:linear-gradient(90deg, var(--pumpkin) 0%, var(--pumpkin-d) 100%);
+    color:#1a0f00;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:7px 10px;
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.06em;
+    border-bottom:3px solid var(--line);
+  }
+  .titlebar .name{ display:flex; align-items:center; gap:7px; }
+  .titlebar .name::before{ content:"🎃"; font-size:11px; }
+  .titlebar .btns{ display:flex; gap:5px; }
+  .titlebar .btns span{
+    width:14px; height:14px;
+    background:var(--panel-2);
+    color:var(--moon);
+    border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:9px; line-height:1;
+  }
+
+  .window-body{ padding:24px 24px; }
+
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--mono);
+    font-size:11px;
+    text-decoration:none;
+    color:var(--mist);
+    margin-bottom:12px;
+  }
+  .back-link:hover{ color:var(--pumpkin); }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--pumpkin);
+    margin:0 0 8px;
+  }
+  h1.pagetitle{
+    font-family:var(--display);
+    font-size:clamp(24px, 6vw, 34px);
+    color:var(--moon);
+    margin:0 0 8px;
+    line-height:1.15;
+    text-shadow:2px 2px 0 rgba(255,122,26,.35);
+  }
+  .lede{
+    font-size:15px;
+    line-height:1.55;
+    margin:0;
+    color:var(--ink);
+    max-width:48ch;
+  }
+
+  .status-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:14px;
+  }
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:12px;
+    background:var(--panel-2);
+    border:2px solid var(--line);
+    padding:5px 10px;
+    color:var(--moon);
+  }
+  .status-pill.score{ color:var(--pumpkin); }
+  .status-pill.lives{ color:#ff5fa2; letter-spacing:2px; }
+
+  .game-window .window-body{ padding:16px; }
+  .stage-wrap{ position:relative; width:100%; }
+
+  canvas{
+    display:block;
+    width:100%;
+    aspect-ratio: 3 / 4;
+    background: linear-gradient(180deg, #1a1330 0%, #0e0a1c 70%, #140d24 100%);
+    border:2px solid var(--line);
+    touch-action:none;
+    cursor:none;
+  }
+
+  .overlay{
+    position:absolute;
+    inset:16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background: rgba(10,7,20,0.88);
+    border:2px solid var(--line);
+    padding: 20px;
+  }
+  .overlay.hidden{ display:none; }
+  .overlay h2{
+    font-family:var(--display);
+    font-size:clamp(1.4rem, 6vw, 1.9rem);
+    color: var(--pumpkin);
+    margin: 0 0 8px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,.4);
+  }
+  .overlay p{
+    margin: 4px 0 18px;
+    color: var(--ink);
+    line-height:1.5;
+    max-width: 340px;
+    font-size:14px;
+  }
+  .overlay .final-score{
+    font-family:var(--mono);
+    font-size:1.15rem;
+    font-weight:700;
+    color: var(--slime);
+    margin-bottom: 18px;
+  }
+
+  .play-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    font-family:var(--mono);
+    font-weight:700;
+    font-size: 0.95rem;
+    color: #1a0f00;
+    background: var(--pumpkin);
+    border: 2px solid var(--line);
+    padding: 11px 22px;
+    cursor:pointer;
+    box-shadow: 3px 3px 0 rgba(0,0,0,.5);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .play-btn:hover{ background:var(--pumpkin-d); transform:translate(-2px,-2px); box-shadow:5px 5px 0 rgba(0,0,0,.5); }
+  .play-btn:active{ transform:translate(0,0); box-shadow:1px 1px 0 rgba(0,0,0,.5); }
+
+  .hint{
+    margin-top: 14px;
+    font-family:var(--mono);
+    font-size: 11px;
+    color: var(--mist);
+    text-align:center;
+  }
+
+  .ad-slot{
+    border:2px dashed var(--line);
+    background:rgba(255,255,255,.03);
+    color:var(--mist);
+    font-family:var(--mono);
+    font-size:11px;
+    text-align:center;
+    padding:18px;
+  }
+
+  footer{
+    text-align:center;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--mist);
+    padding-top:4px;
+  }
+  footer .pumpkin-ic{ color:var(--pumpkin); }
+
+  @media (max-width:560px){
+    .window-body{ padding:18px; }
+    .status-row{ justify-content:space-between; }
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--pumpkin);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="floaters" aria-hidden="true">
+    <span>🦇</span><span>👻</span><span>🕸️</span><span>🦇</span>
+  </div>
+
+  <main>
+
+    <header class="window">
+      <div class="titlebar">
+        <span class="name">BONBONS.EXE</span>
+        <span class="btns"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="window-body">
+        <a class="back-link" href="./ListeJeux.html">← retour aux mini jeux</a>
+        <p class="eyebrow">mini jeu · halloween</p>
+        <h1 class="pagetitle">La Chasse aux Bonbons</h1>
+        <p class="lede">Attrape les bonbons, évite les fantômes et les araignées. Tiens le plus longtemps possible !</p>
+        <div class="status-row">
+          <span class="status-pill score">score : <span id="scoreVal">0</span></span>
+          <span class="status-pill lives">vies : <span id="livesVal">🎃🎃🎃</span></span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== ZONE PUB #1 ====================
+         Remplace par ton code AdSense / autre régie. -->
+    <div class="ad-slot">emplacement publicité (728×90)</div>
+    <!-- ====================================================== -->
+
+    <section class="window game-window">
+      <div class="titlebar">
+        <span class="name">game-canvas.dat</span>
+        <span class="btns"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="window-body">
+        <div class="stage-wrap">
+          <canvas id="game" width="520" height="693"></canvas>
+
+          <div class="overlay" id="startOverlay">
+            <h2>Prêt·e ?</h2>
+            <p>Déplace ton panier-citrouille avec la souris, le doigt (mobile) ou les flèches ← →.</p>
+            <button class="play-btn" id="startBtn">🎃 Commencer</button>
+          </div>
+
+          <div class="overlay hidden" id="endOverlay">
+            <h2>Game Over</h2>
+            <div class="final-score">Score final : <span id="finalScore">0</span></div>
+            <p id="endMsg">Les fantômes t'ont eu cette fois...</p>
+            <button class="play-btn" id="retryBtn">🔁 Rejouer</button>
+          </div>
+        </div>
+        <p class="hint">le jeu accélère toutes les 15 secondes</p>
+      </div>
+    </section>
+
+    <!-- ==================== ZONE PUB #2 ====================
+         Deuxième emplacement, format rectangle. -->
+    <div class="ad-slot" style="max-width:300px; margin:0 auto;">emplacement publicité (300×250)</div>
+    <!-- ====================================================== -->
+
+    <footer>
+      made with <span class="pumpkin-ic">🎃</span> by lady cherri
+    </footer>
+
+  </main>
+
+<script>
+(function(){
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const scoreVal = document.getElementById('scoreVal');
+  const livesVal = document.getElementById('livesVal');
+  const startOverlay = document.getElementById('startOverlay');
+  const endOverlay = document.getElementById('endOverlay');
+  const startBtn = document.getElementById('startBtn');
+  const retryBtn = document.getElementById('retryBtn');
+  const finalScoreEl = document.getElementById('finalScore');
+  const endMsg = document.getElementById('endMsg');
+
+  const W = 520, H = 693;
+  function resizeCanvas(){
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  const GOOD_EMOJI = ['🍬','🍭','🍫','🧁','🍩'];
+  const BAD_EMOJI  = ['👻','🕷️','💀'];
+
+  let player, items, score, lives, running, spawnTimer, spawnInterval, fallSpeed, elapsed, lastTime;
+
+  function resetGame(){
+    player = { x: W/2 - 34, w: 68, h: 54, targetX: W/2 - 34 };
+    items = [];
+    score = 0;
+    lives = 3;
+    running = true;
+    spawnTimer = 0;
+    spawnInterval = 850;
+    fallSpeed = 2.6;
+    elapsed = 0;
+    lastTime = performance.now();
+    updateHUD();
+  }
+
+  function updateHUD(){
+    scoreVal.textContent = score;
+    livesVal.textContent = '🎃'.repeat(Math.max(lives,0)) + '⚫'.repeat(Math.max(3-lives,0));
+  }
+
+  function spawnItem(){
+    const isBad = Math.random() < 0.28;
+    const emoji = isBad
+      ? BAD_EMOJI[Math.floor(Math.random()*BAD_EMOJI.length)]
+      : GOOD_EMOJI[Math.floor(Math.random()*GOOD_EMOJI.length)];
+    items.push({
+      x: 20 + Math.random()*(W-60),
+      y: -40,
+      size: 30 + Math.random()*10,
+      bad: isBad,
+      speed: fallSpeed + Math.random()*1.2,
+      wobble: Math.random()*Math.PI*2,
+      emoji
+    });
+  }
+
+  function drawBackground(){
+    ctx.clearRect(0,0,W,H);
+    ctx.save();
+    ctx.globalAlpha = 0.9;
+    ctx.fillStyle = '#f4ead0';
+    ctx.shadowColor = 'rgba(244,234,208,0.6)';
+    ctx.shadowBlur = 30;
+    ctx.beginPath();
+    ctx.arc(W-70, 70, 38, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+    ctx.fillStyle = 'rgba(255,255,255,0.03)';
+    ctx.fillRect(0, H-70, W, 70);
+  }
+
+  function drawPlayer(){
+    const cx = player.x + player.w/2;
+    const cy = H - 46;
+    ctx.font = '54px serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.save();
+    ctx.shadowColor = 'rgba(255,122,26,0.6)';
+    ctx.shadowBlur = 12;
+    ctx.fillText('🎃', cx, cy);
+    ctx.restore();
+  }
+
+  function drawItems(){
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    items.forEach(it=>{
+      ctx.font = it.size + 'px serif';
+      const wob = Math.sin(it.wobble) * 6;
+      ctx.fillText(it.emoji, it.x + wob, it.y);
+    });
+  }
+
+  function loseLife(){
+    lives--;
+    updateHUD();
+    if(lives<=0){
+      endGame();
+    }
+  }
+
+  function endGame(){
+    running = false;
+    finalScoreEl.textContent = score;
+    endMsg.textContent = score >= 30
+      ? "Bravo, tu es un·e vrai·e chasseur·se de bonbons !"
+      : "Les fantômes t'ont eu cette fois...";
+    endOverlay.classList.remove('hidden');
+  }
+
+  function update(dt){
+    elapsed += dt;
+    fallSpeed = 2.6 + Math.floor(elapsed/15000) * 0.6;
+    spawnInterval = Math.max(380, 850 - Math.floor(elapsed/15000) * 60);
+
+    player.x += (player.targetX - player.x) * 0.25;
+    player.x = Math.max(0, Math.min(W - player.w, player.x));
+
+    spawnTimer += dt;
+    if(spawnTimer > spawnInterval){
+      spawnTimer = 0;
+      spawnItem();
+    }
+
+    const catchY = H - 46;
+    for(let i = items.length - 1; i >= 0; i--){
+      const it = items[i];
+      it.y += it.speed;
+      it.wobble += 0.05;
+
+      const px1 = player.x, px2 = player.x + player.w;
+      if(it.y > catchY - 26 && it.y < catchY + 20 && it.x > px1 - 10 && it.x < px2 + 10){
+        items.splice(i,1);
+        if(it.bad){
+          loseLife();
+        } else {
+          score += 10;
+          updateHUD();
+        }
+        continue;
+      }
+
+      if(it.y > H + 40){
+        items.splice(i,1);
+      }
+    }
+  }
+
+  function frame(now){
+    if(!running) return;
+    const dt = Math.min(50, now - lastTime);
+    lastTime = now;
+    update(dt);
+    drawBackground();
+    drawItems();
+    drawPlayer();
+    requestAnimationFrame(frame);
+  }
+
+  function pointerToLogicalX(clientX){
+    const rect = canvas.getBoundingClientRect();
+    const ratio = W / rect.width;
+    return (clientX - rect.left) * ratio;
+  }
+
+  canvas.addEventListener('mousemove', e=>{
+    if(!running) return;
+    player.targetX = pointerToLogicalX(e.clientX) - player.w/2;
+  });
+  canvas.addEventListener('touchmove', e=>{
+    if(!running) return;
+    e.preventDefault();
+    const t = e.touches[0];
+    player.targetX = pointerToLogicalX(t.clientX) - player.w/2;
+  }, {passive:false});
+
+  window.addEventListener('keydown', e=>{
+    if(!running) return;
+    if(e.key === 'ArrowLeft') player.targetX -= 40;
+    if(e.key === 'ArrowRight') player.targetX += 40;
+  });
+
+  function startGame(){
+    startOverlay.classList.add('hidden');
+    endOverlay.classList.add('hidden');
+    resetGame();
+    lastTime = performance.now();
+    requestAnimationFrame(frame);
+  }
+
+  startBtn.addEventListener('click', startGame);
+  retryBtn.addEventListener('click', startGame);
+
+  drawBackground();
+})();
+</script>
+</body>
+</html>
