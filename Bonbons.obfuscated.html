@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9478029850185028"
+  
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9478029850185028"
      crossorigin="anonymous"></script>
 <!--
   Copyright (c) 2026 Lady Cherri. All rights reserved.
@@ -11,7 +12,7 @@
 -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>La Chasse aux Bonbons — Lady Cherri</title>
+<title>Trick-or-Treat Hunt Lady Cherri</title>
 <meta name="description" content="Mini jeu d'Halloween — attrape les bonbons, évite les fantômes.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -303,14 +304,14 @@
 
     <header class="window">
       <div class="titlebar">
-        <span class="name">BONBONS.EXE</span>
+        <span class="name">CANDIES.EXE</span>
         <span class="btns"><span>_</span><span>□</span><span>×</span></span>
       </div>
       <div class="window-body">
         <a class="back-link" href="./ListeJeux.html">← retour aux mini jeux</a>
-        <p class="eyebrow">mini jeu · halloween</p>
-        <h1 class="pagetitle">La Chasse aux Bonbons</h1>
-        <p class="lede">Attrape les bonbons, évite les fantômes et les araignées. Tiens le plus longtemps possible !</p>
+        <p class="eyebrow">mini game · halloween</p>
+        <h1 class="pagetitle">Trick-or-Treat Hunt</h1>
+        <p class="lede">Catch the candy, avoid the ghosts and spiders. Last as long as possible!</p>
         <div class="status-row">
           <span class="status-pill score">score : <span id="scoreVal">0</span></span>
           <span class="status-pill lives">vies : <span id="livesVal">🎃🎃🎃</span></span>
@@ -318,6 +319,7 @@
       </div>
     </header>
 
+<!-- listeJeux -->
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-9478029850185028"
@@ -338,22 +340,23 @@
           <canvas id="game" width="520" height="693"></canvas>
 
           <div class="overlay" id="startOverlay">
-            <h2>Prêt·e ?</h2>
-            <p>Déplace ton panier-citrouille avec la souris, le doigt (mobile) ou les flèches ← →.</p>
-            <button class="play-btn" id="startBtn">🎃 Commencer</button>
+            <h2>Ready ?</h2>
+            <p>Move your pumpkin basket using the mouse, your finger (on mobile), or the ← → arrow keys.</p>
+            <button class="play-btn" id="startBtn">START</button>
           </div>
 
           <div class="overlay hidden" id="endOverlay">
             <h2>Game Over</h2>
-            <div class="final-score">Score final : <span id="finalScore">0</span></div>
-            <p id="endMsg">Les fantômes t'ont eu cette fois...</p>
-            <button class="play-btn" id="retryBtn">🔁 Rejouer</button>
+            <div class="final-score">Final score: <span id="finalScore">0</span></div>
+            <p id="endMsg">The ghosts got you this time...</p>
+            <button class="play-btn" id="retryBtn">🔁 Play Again</button>
           </div>
         </div>
-        <p class="hint">le jeu accélère toutes les 15 secondes</p>
+        <p class="hint">the game speeds up every 15 seconds</p>
       </div>
     </section>
 
+<!-- listeJeux -->
 <ins class="adsbygoogle"
      style="display:block"
      data-ad-client="ca-pub-9478029850185028"
