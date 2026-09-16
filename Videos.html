@@ -337,15 +337,15 @@
       </div>
     </section>
 
-<ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-9478029850185028"
-     data-ad-slot="1660203582"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-<script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
+    <ins class="adsbygoogle"
+        style="display:block"
+        data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+        data-ad-slot="1234567890"
+        data-ad-format="auto"
+        data-full-width-responsive="true"></ins>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({});
+    </script>
 
     <!-- PLAYLIST -->
     <section class="window">
@@ -365,15 +365,12 @@
   </main>
 
 <script>
-(function(){
-  // ============================================================ 
-  // "id" = l'ID de la vidéo (dans l'URL youtube.com/watch?v=CET_ID_LA)
-  // "title" = le titre affiché sur le site
-  // ============================================================
+(function(){ 
+  // "id" = l'ID de la vidéo (dans l'URL youtube.com/watch?v=CET_ID_LA) 
   const VIDEOS = [
     { id: 'DOGvQYO81Mc', title: 'ASMR. 💗ྀི Cozy Pink Asmr 🌸˚˖⋆ ──★ yeti mic, layered sounds, lofi' },
-    { id: 'VIDEO_ID_2', title: 'Chuchotements et brossage de micro' },
-    { id: 'VIDEO_ID_3', title: 'Roleplay relaxant' },
+    { id: 'idl_Aoj4suw', title: 'ASMR. Halloween - Sorceress Shop (Layered sounds, crackling fire, RPG visuals...)' },
+    { id: 'JdcsQ2WcmSo', title: 'DO WHAT YOU WANT' },
     { id: 'VIDEO_ID_4', title: 'Sons de pluie et pages qui tournent' }
   ];
 
@@ -407,7 +404,7 @@
           '<span class="label">' + v.title + '</span>' +
           '<span class="sub">vidéo ' + (i+1) + '</span>' +
         '</span>' +
-        '<span class="playing-tag">▶ en cours</span>';
+        '<span class="playing-tag">▶ playing...</span>';
       btn.addEventListener('click', ()=> playVideo(i));
       playlistEl.appendChild(btn);
     });
