@@ -321,40 +321,67 @@
   <!-- ===== JUKEBOX ===== -->
 <style>
   #jb{
-    position:fixed; right:14px; bottom:14px; z-index:60; width:250px;
-    background:var(--panel,#1f1733);
-    border:3px solid var(--line,#05030a);
-    box-shadow:5px 5px 0 rgba(0,0,0,.4);
+    position:fixed; right:0; bottom:14px; z-index:60;
+    display:flex; align-items:flex-end;
+    transition:transform .3s ease;
     font-family:var(--mono,'Space Mono',monospace);
     color:var(--ink,#e9e2f2);
   }
-  #jb .jb-bar{
+  #jb.closed{ transform:translateX(250px); }   /* 250 = largeur du panneau */
+  @media (prefers-reduced-motion: reduce){ #jb{ transition:none; } }
+
+  /* la languette */
+  #jbTab{
+    width:30px; height:72px; padding:0; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
+    background:linear-gradient(180deg,var(--pumpkin,#ff7a1a),var(--pumpkin-d,#d9560f));
+    color:#1a0f00; font:inherit; font-weight:700;
+    border:3px solid var(--line,#05030a); border-right:none;
+    box-shadow:-3px 3px 0 rgba(0,0,0,.4);
+  }
+  #jbTab:hover{ filter:brightness(1.1); }
+  #jbTab .ic{ font-size:15px; line-height:1; }
+  #jbTab .arr{ font-size:11px; line-height:1; }
+
+  /* le panneau */
+  #jbPanel{
+    width:250px;
+    background:var(--panel,#1f1733);
+    border:3px solid var(--line,#05030a);
+    box-shadow:5px 5px 0 rgba(0,0,0,.4);
+  }
+  #jbPanel .jb-bar{
     background:linear-gradient(90deg,var(--pumpkin,#ff7a1a),var(--pumpkin-d,#d9560f));
     color:#1a0f00; font-size:11px; font-weight:700; letter-spacing:.06em;
     padding:4px 8px; border-bottom:3px solid var(--line,#05030a);
   }
-  #jb .jb-body{ padding:8px 10px; display:flex; flex-direction:column; gap:8px; }
-  #jb .jb-title{ font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--moon,#f4ead0); }
-  #jb .jb-row{ display:flex; align-items:center; gap:6px; }
-  #jb button{
+  #jbPanel .jb-body{ padding:8px 10px; display:flex; flex-direction:column; gap:8px; }
+  #jbPanel .jb-title{ font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--moon,#f4ead0); }
+  #jbPanel .jb-row{ display:flex; align-items:center; gap:6px; }
+  #jbPanel button{
     font:inherit; font-size:13px; line-height:1; cursor:pointer;
     background:var(--panel-2,#140e24); color:var(--moon,#f4ead0);
     border:2px solid var(--line,#05030a); padding:5px 8px;
   }
-  #jb button:hover{ background:var(--pumpkin,#ff7a1a); color:#1a0f00; }
-  #jb input[type=range]{ flex:1; min-width:0; accent-color:var(--pumpkin,#ff7a1a); }
+  #jbPanel button:hover{ background:var(--pumpkin,#ff7a1a); color:#1a0f00; }
+  #jbPanel input[type=range]{ flex:1; min-width:0; accent-color:var(--pumpkin,#ff7a1a); }
 </style>
 
 <div id="jb" aria-label="Jukebox">
-  <div class="jb-bar">♪ JUKEBOX.EXE</div>
-  <div class="jb-body">
-    <div class="jb-title" id="jbTitle">—</div>
-    <div class="jb-row">
-      <button id="jbPrev" title="Précédent" aria-label="Précédent">⏮</button>
-      <button id="jbPlay" title="Play / Pause" aria-label="Play / Pause">▶</button>
-      <button id="jbNext" title="Suivant" aria-label="Suivant">⏭</button>
-      <button id="jbMute" title="Couper / remettre le son" aria-label="Son">🔊</button>
-      <input id="jbVol" type="range" min="0" max="100" value="40" aria-label="Volume">
+  <button id="jbTab" type="button" aria-expanded="true" aria-controls="jbPanel" title="Ranger le jukebox">
+    <span class="ic">♪</span><span class="arr" id="jbArr">▶</span>
+  </button>
+  <div id="jbPanel">
+    <div class="jb-bar">♪ JUKEBOX.EXE</div>
+    <div class="jb-body">
+      <div class="jb-title" id="jbTitle">—</div>
+      <div class="jb-row">
+        <button id="jbPrev" title="Précédent" aria-label="Précédent">⏮</button>
+        <button id="jbPlay" title="Play / Pause" aria-label="Play / Pause">▶</button>
+        <button id="jbNext" title="Suivant" aria-label="Suivant">⏭</button>
+        <button id="jbMute" title="Couper / remettre le son" aria-label="Son">🔊</button>
+        <input id="jbVol" type="range" min="0" max="100" value="40" aria-label="Volume">
+      </div>
     </div>
   </div>
 </div>
@@ -369,7 +396,7 @@
   ];
 
   const KEY = 'ladycherri_jukebox';
-  let st = { i:0, t:0, v:0.4, m:false, p:false };
+  let st = { i:0, t:0, v:0.4, m:false, p:false, c:null };   
   try { Object.assign(st, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch(e){}
   if (st.i >= TRACKS.length) st.i = 0;
 
@@ -382,6 +409,24 @@
 
   function save(){ try { st.t = a.currentTime || 0; localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
 
+ 
+  const jb = $('jb'), panel = $('jbPanel'), tab = $('jbTab');
+  function setClosed(c, remember){
+    jb.classList.toggle('closed', c);
+    panel.inert = c;                               
+    tab.setAttribute('aria-expanded', String(!c));
+    tab.title = c ? 'Ouvrir le jukebox' : 'Ranger le jukebox';
+    $('jbArr').textContent = c ? '◀' : '▶';
+    if (remember){ st.c = c; save(); }
+  }
+  tab.onclick = function(){ setClosed(!jb.classList.contains('closed'), true); };
+
+ 
+  jb.style.transition = 'none';
+  setClosed(st.c === null ? window.innerWidth < 600 : st.c, false);
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ jb.style.transition = ''; }); });
+
+  /* ---- lecteur ---- */
   function ui(){
     $('jbTitle').textContent = TRACKS[st.i].title;
     $('jbPlay').textContent = st.p ? '⏸' : '▶';
