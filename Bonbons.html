@@ -13,7 +13,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Trick-or-Treat Hunt Lady Cherri</title>
-<meta name="description" content="Mini jeu d'Halloween — attrape les bonbons, évite les fantômes.">
+<meta name="description" content="Mini Game 1 Halloween">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -307,8 +307,8 @@
         <span class="btns"><span>_</span><span>□</span><span>×</span></span>
       </div>
       <div class="window-body">
-        <a class="back-link" href="./ListeJeux.html">← retour aux mini jeux</a>
-        <p class="eyebrow">mini game · halloween</p>
+        <a class="back-link" href="./ListeJeux.html">← back to the mini games' page</a>
+        <p class="eyebrow">mini game | halloween</p>
         <h1 class="pagetitle">Trick-or-Treat Hunt</h1>
         <p class="lede">Catch the candy, avoid the ghosts and spiders. Last as long as possible!</p>
         <div class="status-row">
@@ -445,8 +445,6 @@
     ctx.arc(W-70, 70, 38, 0, Math.PI*2);
     ctx.fill();
     ctx.restore();
-
-    /* FIX : save/restore pour que la couleur à 3 % ne déborde pas sur les émojis */
     ctx.save();
     ctx.fillStyle = 'rgba(255,255,255,0.03)';
     ctx.fillRect(0, H-70, W, 70);
@@ -459,7 +457,7 @@
     ctx.font = '54px serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#fff';   /* FIX : couleur opaque */
+    ctx.fillStyle = '#fff';  
     ctx.save();
     ctx.shadowColor = 'rgba(255,122,26,0.6)';
     ctx.shadowBlur = 12;
@@ -470,7 +468,7 @@
   function drawItems(){
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillStyle = '#fff';   /* FIX : couleur opaque */
+    ctx.fillStyle = '#fff';  
     items.forEach(it=>{
       ctx.font = it.size + 'px serif';
       const wob = Math.sin(it.wobble) * 6;
