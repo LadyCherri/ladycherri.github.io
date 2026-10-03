@@ -313,7 +313,7 @@
         <p class="lede">Catch the candy, avoid the ghosts and spiders. Last as long as possible!</p>
         <div class="status-row">
           <span class="status-pill score">score : <span id="scoreVal">0</span></span>
-          <span class="status-pill lives">vies : <span id="livesVal">🎃🎃🎃</span></span>
+          <span class="status-pill lives">lives : <span id="livesVal">🎃🎃🎃</span></span>
         </div>
       </div>
     </header>
@@ -445,8 +445,12 @@
     ctx.arc(W-70, 70, 38, 0, Math.PI*2);
     ctx.fill();
     ctx.restore();
+
+    /* FIX : save/restore pour que la couleur à 3 % ne déborde pas sur les émojis */
+    ctx.save();
     ctx.fillStyle = 'rgba(255,255,255,0.03)';
     ctx.fillRect(0, H-70, W, 70);
+    ctx.restore();
   }
 
   function drawPlayer(){
@@ -455,6 +459,7 @@
     ctx.font = '54px serif';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#fff';   /* FIX : couleur opaque */
     ctx.save();
     ctx.shadowColor = 'rgba(255,122,26,0.6)';
     ctx.shadowBlur = 12;
@@ -465,6 +470,7 @@
   function drawItems(){
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#fff';   /* FIX : couleur opaque */
     items.forEach(it=>{
       ctx.font = it.size + 'px serif';
       const wob = Math.sin(it.wobble) * 6;
