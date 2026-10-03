@@ -30,16 +30,15 @@
 
   /* ============ TOKENS ============ */
   :root{
-    --blush:   #fbe6ef;   /* page background */
-    --blush-2: #f6d9e8;   /* secondary bg wash */
-    --pink:    #ff6fa0;   /* primary accent / title bars */
-    --pink-deep:#ef4b85;  /* hover state of pink */
-    --wine:    #6f1f42;   /* headings, deep contrast */
-    --ink:     #2c1a24;   /* body text */
-    --lilac:   #b6a1de;   /* secondary accent, pro section */
-    --cream:   #fff8fb;   /* card / window content bg */
-    --line:    #3a2230;   /* dark hairline used sparingly on chrome */
-
+    --blush:   #fbe6ef;    
+    --blush-2: #f6d9e8;    
+    --pink:    #ff6fa0;  
+    --pink-deep:#ef4b85;  
+    --wine:    #6f1f42;    
+    --ink:     #2c1a24;  
+    --lilac:   #b6a1de;   
+    --cream:   #fff8fb;   
+    --line:    #3a2230;    
     --display: 'Silkscreen', monospace;
     --body:    'Quicksand', sans-serif;
     --mono:    'Space Mono', monospace;
@@ -63,7 +62,7 @@
     overflow-x:hidden;
   }
 
-  /* faint scanline film over everything, very low opacity */
+ 
   body::before{
     content:"";
     position:fixed; inset:0;
@@ -110,7 +109,7 @@
     gap:34px;
   }
 
-  /* ============ SIGNATURE: WINDOW CHROME ============ */
+ 
   .window{
     background:var(--cream);
     border:3px solid var(--line);
@@ -151,7 +150,7 @@
 
   .window-body{ padding:28px 26px; }
 
-  /* ============ HERO ============ */
+ 
   .hero .window-body{
     display:flex;
     gap:28px;
@@ -236,7 +235,7 @@
   .ig-link:hover{ background:var(--pink); color:#fff8fb; transform:translate(-1px,-1px); }
   .ig-link svg{ width:12px; height:12px; }
 
-  /* ============ SECTION HEADINGS ============ */
+ 
   .section-eyebrow{
     font-family:var(--mono);
     font-size:11px;
@@ -254,7 +253,7 @@
   .casual .section-title{ color:var(--wine); }
   .pro .section-title{ color:#4c3a75; }
 
-  /* ============ LINK GRID ============ */
+ 
   .link-grid{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
@@ -314,7 +313,7 @@
   }
   .pro .linkcard .arrow{ color:#4c3a75; }
 
-  /* ============ MARQUEE DIVIDER ============ */
+ 
   .marquee-wrap{
     overflow:hidden;
     border:3px solid var(--line);
@@ -339,7 +338,7 @@
     100%{ transform:translateX(-100%); }
   }
 
-  /* ============ FOOTER ============ */
+ 
   footer{
     text-align:center;
     font-family:var(--mono);
@@ -349,7 +348,7 @@
   }
   footer .heart{ color:var(--pink-deep); }
 
-  /* ============ RESPONSIVE ============ */
+ 
   @media (max-width:560px){
     .hero .window-body{ flex-direction:column; text-align:center; }
     .hero-text{ width:100%; }
@@ -467,7 +466,7 @@
         
           <p class="section-eyebrow">Currently working on "+1 melt per click" on Roblox! Play now!</br>❮❮❮❮</p>  
 
-            <!-- <a class="linkcard" href="./ListeJeux.html" >
+            <a class="linkcard" href="./ListeJeux.html" >
             <span class="icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="11" rx="4"/><path d="M7 10.5v4M5 12.5h4"/><circle cx="15.5" cy="11.5" r="1"/><circle cx="18" cy="14" r="1"/></svg>
             </span>
@@ -476,7 +475,7 @@
                 <span class="sub">Halloween only</span>
             </span>
             <span class="arrow">↗</span>
-          </a> -->
+          </a> 
         </div>
       </div>
     </section>
