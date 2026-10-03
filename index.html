@@ -366,113 +366,6 @@
   }
 </style>
 </head>
-
-<!-- ===== JUKEBOX ===== -->
-<style>
-  #jb{
-    position:fixed; right:14px; bottom:14px; z-index:60; width:250px;
-    background:var(--panel,#1f1733);
-    border:3px solid var(--line,#05030a);
-    box-shadow:5px 5px 0 rgba(0,0,0,.4);
-    font-family:var(--mono,'Space Mono',monospace);
-    color:var(--ink,#e9e2f2);
-  }
-  #jb .jb-bar{
-    background:linear-gradient(90deg,var(--pumpkin,#ff7a1a),var(--pumpkin-d,#d9560f));
-    color:#1a0f00; font-size:11px; font-weight:700; letter-spacing:.06em;
-    padding:4px 8px; border-bottom:3px solid var(--line,#05030a);
-  }
-  #jb .jb-body{ padding:8px 10px; display:flex; flex-direction:column; gap:8px; }
-  #jb .jb-title{ font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--moon,#f4ead0); }
-  #jb .jb-row{ display:flex; align-items:center; gap:6px; }
-  #jb button{
-    font:inherit; font-size:13px; line-height:1; cursor:pointer;
-    background:var(--panel-2,#140e24); color:var(--moon,#f4ead0);
-    border:2px solid var(--line,#05030a); padding:5px 8px;
-  }
-  #jb button:hover{ background:var(--pumpkin,#ff7a1a); color:#1a0f00; }
-  #jb input[type=range]{ flex:1; min-width:0; accent-color:var(--pumpkin,#ff7a1a); }
-</style>
-
-<div id="jb" aria-label="Jukebox">
-  <div class="jb-bar">♪ JUKEBOX.EXE</div>
-  <div class="jb-body">
-    <div class="jb-title" id="jbTitle">—</div>
-    <div class="jb-row">
-      <button id="jbPrev" title="Précédent" aria-label="Précédent">⏮</button>
-      <button id="jbPlay" title="Play / Pause" aria-label="Play / Pause">▶</button>
-      <button id="jbNext" title="Suivant" aria-label="Suivant">⏭</button>
-      <button id="jbMute" title="Couper / remettre le son" aria-label="Son">🔊</button>
-      <input id="jbVol" type="range" min="0" max="100" value="40" aria-label="Volume">
-    </div>
-  </div>
-</div>
-
-<script>
-(function(){
-  const TRACKS = [
-    { title:'Up To Something', src:'NoCopyrightUpToSomethingMusic.m4a' },
-    // { title:'Titre 2', src:'musique2.mp3' },
-    // { title:'Titre 3', src:'musique3.mp3' },
-    // { title:'Titre 4', src:'musique4.mp3' },
-  ];
-
-  const KEY = 'ladycherri_jukebox';
-  let st = { i:0, t:0, v:0.4, m:false, p:false };
-  try { Object.assign(st, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch(e){}
-  if (st.i >= TRACKS.length) st.i = 0;
-
-  const $ = id => document.getElementById(id);
-  const a = new Audio();
-  a.preload = 'metadata';
-  a.loop = TRACKS.length === 1;
-  a.volume = st.v;
-  a.muted = st.m;
-
-  function save(){ try { st.t = a.currentTime || 0; localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
-
-  function ui(){
-    $('jbTitle').textContent = TRACKS[st.i].title;
-    $('jbPlay').textContent = st.p ? '⏸' : '▶';
-    $('jbMute').textContent = (a.muted || a.volume === 0) ? '🔇' : '🔊';
-    $('jbVol').value = Math.round(a.volume * 100);
-    const multi = TRACKS.length > 1;
-    $('jbPrev').style.display = multi ? '' : 'none';
-    $('jbNext').style.display = multi ? '' : 'none';
-  }
-
-  function load(i, startAt){
-    st.i = i;
-    a.src = TRACKS[i].src;
-    if (startAt) a.addEventListener('loadedmetadata', function f(){ a.currentTime = startAt; a.removeEventListener('loadedmetadata', f); });
-    ui();
-  }
-
-  function play(){
-    a.play().then(function(){ st.p = true; ui(); save(); })
-            .catch(function(){ st.p = false; ui(); });   
-  }
-  function pause(){ a.pause(); st.p = false; ui(); save(); }
-
-  $('jbPlay').onclick = function(){ a.paused ? play() : pause(); };
-  $('jbNext').onclick = function(){ load((st.i + 1) % TRACKS.length, 0); play(); };
-  $('jbPrev').onclick = function(){ load((st.i - 1 + TRACKS.length) % TRACKS.length, 0); play(); };
-  $('jbMute').onclick = function(){ a.muted = !a.muted; st.m = a.muted; ui(); save(); };
-  $('jbVol').oninput = function(){
-    a.volume = this.value / 100; st.v = a.volume;
-    if (a.volume > 0 && a.muted){ a.muted = false; st.m = false; }
-    ui(); save();
-  };
-
-  a.addEventListener('ended', function(){ if (TRACKS.length > 1){ load((st.i + 1) % TRACKS.length, 0); play(); } });
-  a.addEventListener('timeupdate', function(){ if (Math.floor(a.currentTime) % 2 === 0) save(); });
-  window.addEventListener('pagehide', save);
-
-  load(st.i, st.t);
-  if (st.p) play();
-})();
-</script>
-<!-- ===== FIN JUKEBOX ===== -->
   
 <body>
 
@@ -668,6 +561,112 @@
     </footer>
 
   </main>
+    <!-- ===== JUKEBOX ===== -->
+<style>
+  #jb{
+    position:fixed; right:14px; bottom:14px; z-index:60; width:250px;
+    background:var(--panel,#1f1733);
+    border:3px solid var(--line,#05030a);
+    box-shadow:5px 5px 0 rgba(0,0,0,.4);
+    font-family:var(--mono,'Space Mono',monospace);
+    color:var(--ink,#e9e2f2);
+  }
+  #jb .jb-bar{
+    background:linear-gradient(90deg,var(--pumpkin,#ff7a1a),var(--pumpkin-d,#d9560f));
+    color:#1a0f00; font-size:11px; font-weight:700; letter-spacing:.06em;
+    padding:4px 8px; border-bottom:3px solid var(--line,#05030a);
+  }
+  #jb .jb-body{ padding:8px 10px; display:flex; flex-direction:column; gap:8px; }
+  #jb .jb-title{ font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:var(--moon,#f4ead0); }
+  #jb .jb-row{ display:flex; align-items:center; gap:6px; }
+  #jb button{
+    font:inherit; font-size:13px; line-height:1; cursor:pointer;
+    background:var(--panel-2,#140e24); color:var(--moon,#f4ead0);
+    border:2px solid var(--line,#05030a); padding:5px 8px;
+  }
+  #jb button:hover{ background:var(--pumpkin,#ff7a1a); color:#1a0f00; }
+  #jb input[type=range]{ flex:1; min-width:0; accent-color:var(--pumpkin,#ff7a1a); }
+</style>
+
+<div id="jb" aria-label="Jukebox">
+  <div class="jb-bar">♪ JUKEBOX.EXE</div>
+  <div class="jb-body">
+    <div class="jb-title" id="jbTitle">—</div>
+    <div class="jb-row">
+      <button id="jbPrev" title="Précédent" aria-label="Précédent">⏮</button>
+      <button id="jbPlay" title="Play / Pause" aria-label="Play / Pause">▶</button>
+      <button id="jbNext" title="Suivant" aria-label="Suivant">⏭</button>
+      <button id="jbMute" title="Couper / remettre le son" aria-label="Son">🔊</button>
+      <input id="jbVol" type="range" min="0" max="100" value="40" aria-label="Volume">
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const TRACKS = [
+    { title:'Up To Something', src:'NoCopyrightUpToSomethingMusic.m4a' },
+    // { title:'Titre 2', src:'musique2.mp3' },
+    // { title:'Titre 3', src:'musique3.mp3' },
+    // { title:'Titre 4', src:'musique4.mp3' },
+  ];
+
+  const KEY = 'ladycherri_jukebox';
+  let st = { i:0, t:0, v:0.4, m:false, p:false };
+  try { Object.assign(st, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch(e){}
+  if (st.i >= TRACKS.length) st.i = 0;
+
+  const $ = id => document.getElementById(id);
+  const a = new Audio();
+  a.preload = 'metadata';
+  a.loop = TRACKS.length === 1;
+  a.volume = st.v;
+  a.muted = st.m;
+
+  function save(){ try { st.t = a.currentTime || 0; localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
+
+  function ui(){
+    $('jbTitle').textContent = TRACKS[st.i].title;
+    $('jbPlay').textContent = st.p ? '⏸' : '▶';
+    $('jbMute').textContent = (a.muted || a.volume === 0) ? '🔇' : '🔊';
+    $('jbVol').value = Math.round(a.volume * 100);
+    const multi = TRACKS.length > 1;
+    $('jbPrev').style.display = multi ? '' : 'none';
+    $('jbNext').style.display = multi ? '' : 'none';
+  }
+
+  function load(i, startAt){
+    st.i = i;
+    a.src = TRACKS[i].src;
+    if (startAt) a.addEventListener('loadedmetadata', function f(){ a.currentTime = startAt; a.removeEventListener('loadedmetadata', f); });
+    ui();
+  }
+
+  function play(){
+    a.play().then(function(){ st.p = true; ui(); save(); })
+            .catch(function(){ st.p = false; ui(); });   
+  }
+  function pause(){ a.pause(); st.p = false; ui(); save(); }
+
+  $('jbPlay').onclick = function(){ a.paused ? play() : pause(); };
+  $('jbNext').onclick = function(){ load((st.i + 1) % TRACKS.length, 0); play(); };
+  $('jbPrev').onclick = function(){ load((st.i - 1 + TRACKS.length) % TRACKS.length, 0); play(); };
+  $('jbMute').onclick = function(){ a.muted = !a.muted; st.m = a.muted; ui(); save(); };
+  $('jbVol').oninput = function(){
+    a.volume = this.value / 100; st.v = a.volume;
+    if (a.volume > 0 && a.muted){ a.muted = false; st.m = false; }
+    ui(); save();
+  };
+
+  a.addEventListener('ended', function(){ if (TRACKS.length > 1){ load((st.i + 1) % TRACKS.length, 0); play(); } });
+  a.addEventListener('timeupdate', function(){ if (Math.floor(a.currentTime) % 2 === 0) save(); });
+  window.addEventListener('pagehide', save);
+
+  load(st.i, st.t);
+  if (st.p) play();
+})();
+</script>
+<!-- ===== FIN JUKEBOX ===== -->
 
 </body>
 </html>
