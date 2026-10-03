@@ -561,7 +561,7 @@
     </footer>
 
   </main>
-  <!-- ===== JUKEBOX ===== -->
+<!-- ===== JUKEBOX ===== -->
 <style>
   #jb{
     position:fixed; right:0; bottom:14px; z-index:60;
@@ -570,10 +570,9 @@
     font-family:var(--mono,'Space Mono',monospace);
     color:var(--ink,#e9e2f2);
   }
-  #jb.closed{ transform:translateX(250px); }   /* 250 = largeur du panneau */
+  #jb.closed{ transform:translateX(250px); }
   @media (prefers-reduced-motion: reduce){ #jb{ transition:none; } }
 
-  /* la languette */
   #jbTab{
     width:30px; height:72px; padding:0; cursor:pointer;
     display:flex; flex-direction:column; align-items:center; justify-content:center; gap:6px;
@@ -586,7 +585,6 @@
   #jbTab .ic{ font-size:15px; line-height:1; }
   #jbTab .arr{ font-size:11px; line-height:1; }
 
-  /* le panneau */
   #jbPanel{
     width:250px;
     background:var(--panel,#1f1733);
@@ -639,7 +637,7 @@
   ];
 
   const KEY = 'ladycherri_jukebox';
-  let st = { i:0, t:0, v:0.4, m:false, p:false, c:null };   
+  let st = { i:0, t:0, v:0.4, m:false, p:false, c:null };
   try { Object.assign(st, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch(e){}
   if (st.i >= TRACKS.length) st.i = 0;
 
@@ -652,11 +650,10 @@
 
   function save(){ try { st.t = a.currentTime || 0; localStorage.setItem(KEY, JSON.stringify(st)); } catch(e){} }
 
- 
   const jb = $('jb'), panel = $('jbPanel'), tab = $('jbTab');
   function setClosed(c, remember){
     jb.classList.toggle('closed', c);
-    panel.inert = c;                               
+    panel.inert = c;
     tab.setAttribute('aria-expanded', String(!c));
     tab.title = c ? 'Ouvrir le jukebox' : 'Ranger le jukebox';
     $('jbArr').textContent = c ? '◀' : '▶';
@@ -664,12 +661,10 @@
   }
   tab.onclick = function(){ setClosed(!jb.classList.contains('closed'), true); };
 
- 
   jb.style.transition = 'none';
   setClosed(st.c === null ? window.innerWidth < 600 : st.c, false);
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ jb.style.transition = ''; }); });
 
-  /* ---- lecteur ---- */
   function ui(){
     $('jbTitle').textContent = TRACKS[st.i].title;
     $('jbPlay').textContent = st.p ? '⏸' : '▶';
@@ -689,7 +684,7 @@
 
   function play(){
     a.play().then(function(){ st.p = true; ui(); save(); })
-            .catch(function(){ st.p = false; ui(); });   
+            .catch(function(){ st.p = false; ui(); });
   }
   function pause(){ a.pause(); st.p = false; ui(); save(); }
 
