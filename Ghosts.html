@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9478029850185028" crossorigin="anonymous"></script>
+<!--
+  Copyright (c) 2026 Lady Cherri. All rights reserved.
+  This code is provided for viewing purposes only as part of ladycherri's
+  personal website. Copying, redistributing, or reusing this code (in whole
+  or in part) without prior written permission is not permitted.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Whack-a-Ghost — Lady Cherri</title>
+<meta name="description" content="Halloween mini game — whack the ghosts before they disappear.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg-deep:  #0c0816;
+    --bg-mid:   #1c1330;
+    --panel:    #1f1733;
+    --panel-2:  #140e24;
+    --line:     #05030a;
+    --pumpkin:  #ff7a1a;
+    --pumpkin-d:#d9560f;
+    --moon:     #f4ead0;
+    --ink:      #e9e2f2;
+    --slime:    #7de08d;
+    --mist:     #7a6f92;
+
+    --display: 'Silkscreen', monospace;
+    --body:    'Quicksand', sans-serif;
+    --mono:    'Space Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 85% 6%, rgba(244,234,208,.10), transparent 40%),
+      radial-gradient(circle at 10% 85%, rgba(255,122,26,.08), transparent 45%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 26px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 26px),
+      linear-gradient(160deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
+    color:var(--ink);
+    font-family:var(--body);
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.06) 0px, rgba(0,0,0,.06) 1px, transparent 1px, transparent 3px);
+    z-index:50;
+  }
+
+  a{ color:inherit; }
+
+  .floaters{ position:fixed; inset:0; pointer-events:none; z-index:1; }
+  .floaters span{
+    position:absolute;
+    font-size:22px;
+    opacity:.4;
+    animation:drift 14s ease-in-out infinite;
+    filter:drop-shadow(0 0 6px rgba(255,122,26,.3));
+  }
+  .floaters span:nth-child(1){ top:8%;  left:6%;  animation-delay:0s;   font-size:16px; }
+  .floaters span:nth-child(2){ top:60%; left:3%;  animation-delay:3s;   font-size:24px; }
+  .floaters span:nth-child(3){ top:20%; right:7%; animation-delay:1.5s; font-size:20px; }
+  .floaters span:nth-child(4){ top:78%; right:10%;animation-delay:5s;   font-size:16px; }
+  @keyframes drift{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-22px) rotate(8deg); } }
+  @media (prefers-reduced-motion: reduce){ .floaters span{ animation:none; } }
+
+  main{
+    position:relative;
+    z-index:2;
+    max-width:600px;
+    margin:0 auto;
+    padding:48px 20px 70px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+
+  .window{
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow: 6px 6px 0 rgba(0,0,0,.4);
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .6s ease forwards;
+  }
+  .window:nth-of-type(2){ animation-delay:.1s; }
+  .window:nth-of-type(3){ animation-delay:.18s; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  .titlebar{
+    background:linear-gradient(90deg, var(--pumpkin) 0%, var(--pumpkin-d) 100%);
+    color:#1a0f00;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:7px 10px;
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.06em;
+    border-bottom:3px solid var(--line);
+  }
+  .titlebar .name{ display:flex; align-items:center; gap:7px; }
+  .titlebar .name::before{ content:"👻"; font-size:11px; }
+  .titlebar .btns{ display:flex; gap:5px; }
+  .titlebar .btns span{
+    width:14px; height:14px;
+    background:var(--panel-2);
+    color:var(--moon);
+    border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:9px; line-height:1;
+  }
+
+  .window-body{ padding:24px; }
+
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--mono);
+    font-size:11px;
+    text-decoration:none;
+    color:var(--mist);
+    margin-bottom:12px;
+  }
+  .back-link:hover{ color:var(--pumpkin); }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--pumpkin);
+    margin:0 0 8px;
+  }
+  h1.pagetitle{
+    font-family:var(--display);
+    font-size:clamp(24px, 6vw, 34px);
+    color:var(--moon);
+    margin:0 0 8px;
+    line-height:1.15;
+    text-shadow:2px 2px 0 rgba(255,122,26,.35);
+  }
+  .lede{
+    font-size:15px;
+    line-height:1.55;
+    margin:0;
+    color:var(--ink);
+    max-width:48ch;
+  }
+
+  .status-row{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:14px;
+    flex-wrap:wrap;
+    margin-top:14px;
+  }
+  .status-pill{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--mono);
+    font-weight:700;
+    font-size:12px;
+    background:var(--panel-2);
+    border:2px solid var(--line);
+    padding:5px 10px;
+    color:var(--moon);
+  }
+  .status-pill.score{ color:var(--pumpkin); }
+  .status-pill.time{ color:var(--slime); }
+
+  .game-window .window-body{ padding:16px; }
+  .stage-wrap{ position:relative; width:100%; }
+
+  .board{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:10px;
+    background: linear-gradient(180deg, #1a1330 0%, #0e0a1c 70%, #140d24 100%);
+    border:2px solid var(--line);
+    padding:14px;
+  }
+
+  .hole{
+    position:relative;
+    aspect-ratio:1/1;
+    background: radial-gradient(ellipse at 50% 70%, #060410 0%, #120b22 60%, #1a1330 100%);
+    border:2px solid var(--line);
+    border-radius:50%;
+    overflow:hidden;
+    cursor:pointer;
+    display:flex;
+    align-items:flex-end;
+    justify-content:center;
+  }
+
+  .critter{
+    font-size:0px;
+    line-height:1;
+    transform:translateY(100%);
+    transition: transform 0.12s cubic-bezier(.3,1.6,.6,1);
+    user-select:none;
+    -webkit-user-select:none;
+  }
+  .hole.up .critter{
+    font-size:46px;
+    transform:translateY(12%);
+  }
+  .hole.hit .critter{
+    transform:translateY(100%) scale(0.6);
+    transition: transform 0.15s ease-in;
+  }
+
+  .overlay{
+    position:absolute;
+    inset:16px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background: rgba(10,7,20,0.92);
+    border:2px solid var(--line);
+    padding: 20px;
+  }
+  .overlay.hidden{ display:none; }
+  .overlay h2{
+    font-family:var(--display);
+    font-size:clamp(1.4rem, 6vw, 1.9rem);
+    color: var(--pumpkin);
+    margin: 0 0 8px;
+    text-shadow: 2px 2px 0 rgba(0,0,0,.4);
+  }
+  .overlay p{
+    margin: 4px 0 18px;
+    color: var(--ink);
+    line-height:1.5;
+    max-width: 340px;
+    font-size:14px;
+  }
+  .overlay .final-score{
+    font-family:var(--mono);
+    font-size:1.15rem;
+    font-weight:700;
+    color: var(--slime);
+    margin-bottom: 18px;
+  }
+
+  .play-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    text-decoration:none;
+    font-family:var(--mono);
+    font-weight:700;
+    font-size: 0.95rem;
+    color: #1a0f00;
+    background: var(--pumpkin);
+    border: 2px solid var(--line);
+    padding: 11px 22px;
+    cursor:pointer;
+    box-shadow: 3px 3px 0 rgba(0,0,0,.5);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .play-btn:hover{ background:var(--pumpkin-d); transform:translate(-2px,-2px); box-shadow:5px 5px 0 rgba(0,0,0,.5); }
+  .play-btn:active{ transform:translate(0,0); box-shadow:1px 1px 0 rgba(0,0,0,.5); }
+
+  .hint{
+    margin-top: 14px;
+    font-family:var(--mono);
+    font-size: 11px;
+    color: var(--mist);
+    text-align:center;
+  }
+
+  .ad-slot{
+    border:2px dashed var(--line);
+    background:rgba(255,255,255,.03);
+    color:var(--mist);
+    font-family:var(--mono);
+    font-size:11px;
+    text-align:center;
+    padding:18px;
+  }
+
+  footer{
+    text-align:center;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--mist);
+    padding-top:4px;
+  }
+  footer .pumpkin-ic{ color:var(--pumpkin); }
+
+  @media (max-width:560px){
+    .window-body{ padding:18px; }
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--pumpkin);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="floaters" aria-hidden="true">
+    <span>🦇</span><span>👻</span><span>🕸️</span><span>🦇</span>
+  </div>
+
+  <main>
+
+    <header class="window">
+      <div class="titlebar">
+        <span class="name">FANTOMES.EXE</span>
+        <span class="btns"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="window-body">
+        <a class="back-link" href="./ListeJeux.html">← back to mini games</a>
+        <p class="eyebrow">mini game · halloween</p>
+        <h1 class="pagetitle">Whack-a-Ghost</h1>
+        <p class="lede">Ghosts pop out of the holes: whack them before they dive back down! Avoid the pumpkins, they cost you points.</p>
+        <div class="status-row">
+          <span class="status-pill score">score: <span id="scoreVal">0</span></span>
+          <span class="status-pill time">time: <span id="timeVal">30</span>s</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== ZONE PUB ====================
+         Replace with your AdSense code. -->
+    <div class="ad-slot">ad space (728×90)</div>
+    <!-- ==================================================== -->
+
+    <section class="window game-window">
+      <div class="titlebar">
+        <span class="name">whack-board.dat</span>
+        <span class="btns"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="window-body">
+        <div class="stage-wrap">
+          <div class="board" id="board">
+            <!-- 9 holes generated in JS -->
+          </div>
+
+          <div class="overlay" id="startOverlay">
+            <h2>Ready?</h2>
+            <p>Tap (click or touch) the ghosts 👻 as soon as they pop out. Avoid the pumpkins 🎃, they cost points!</p>
+            <button class="play-btn" id="startBtn">👻 Start</button>
+          </div>
+
+          <div class="overlay hidden" id="endOverlay">
+            <h2>Time's up!</h2>
+            <div class="final-score">Final score: <span id="finalScore">0</span></div>
+            <p id="endMsg"></p>
+            <button class="play-btn" id="retryBtn">🔁 Play again</button>
+          </div>
+        </div>
+        <p class="hint">the pace speeds up as time goes by</p>
+      </div>
+    </section>
+
+    <!-- ==================== ZONE PUB ====================
+         Replace with your AdSense code. -->
+    <div class="ad-slot" style="max-width:300px; margin:0 auto;">ad space (300×250)</div>
+    <!-- ==================================================== -->
+
+    <footer>
+      made with <span class="pumpkin-ic">🎃</span> by lady cherri
+    </footer>
+
+  </main>
+
+<script>
+(function(){
+  const board = document.getElementById('board');
+  const scoreVal = document.getElementById('scoreVal');
+  const timeVal = document.getElementById('timeVal');
+  const startOverlay = document.getElementById('startOverlay');
+  const endOverlay = document.getElementById('endOverlay');
+  const startBtn = document.getElementById('startBtn');
+  const retryBtn = document.getElementById('retryBtn');
+  const finalScoreEl = document.getElementById('finalScore');
+  const endMsg = document.getElementById('endMsg');
+
+  const HOLE_COUNT = 9;
+  const GAME_DURATION = 30; // secondes
+
+  let holes = [];
+  let score = 0;
+  let timeLeft = GAME_DURATION;
+  let running = false;
+  let popTimer = null;
+  let countdownTimer = null;
+  let activeHoleIndexes = new Set();
+
+  function buildBoard(){
+    board.innerHTML = '';
+    holes = [];
+    for(let i = 0; i < HOLE_COUNT; i++){
+      const hole = document.createElement('div');
+      hole.className = 'hole';
+      const critter = document.createElement('div');
+      critter.className = 'critter';
+      critter.textContent = '👻';
+      hole.appendChild(critter);
+      hole.addEventListener('click', ()=> hitHole(i));
+      board.appendChild(hole);
+      holes.push({ el: hole, critterEl: critter, up: false, isBad: false, hideTimeout: null });
+    }
+  }
+
+  function updateHUD(){
+    scoreVal.textContent = score;
+    timeVal.textContent = timeLeft;
+  }
+
+  function popRandomHole(){
+    if(!running) return;
+    const available = holes
+      .map((h, i)=> i)
+      .filter(i => !holes[i].up);
+    if(available.length === 0) return;
+
+    const idx = available[Math.floor(Math.random() * available.length)];
+    const h = holes[idx];
+    const isBad = Math.random() < 0.22;
+    h.isBad = isBad;
+    h.critterEl.textContent = isBad ? '🎃' : '👻';
+    h.up = true;
+    h.el.classList.add('up');
+    h.el.classList.remove('hit');
+
+    const progress = Math.max(0, Math.min(1, (GAME_DURATION - timeLeft) / GAME_DURATION));
+    const upDuration = Math.max(500, 1100 - progress * 500) + Math.random()*200;
+
+    h.hideTimeout = setTimeout(()=>{
+      if(h.up){
+        h.up = false;
+        h.el.classList.remove('up');
+      }
+    }, upDuration);
+  }
+
+  function hitHole(idx){
+    if(!running) return;
+    const h = holes[idx];
+    if(!h.up) return;
+
+    clearTimeout(h.hideTimeout);
+    h.up = false;
+    h.el.classList.remove('up');
+    h.el.classList.add('hit');
+    setTimeout(()=> h.el.classList.remove('hit'), 160);
+
+    if(h.isBad){
+      score = Math.max(0, score - 5);
+    } else {
+      score += 10;
+    }
+    updateHUD();
+  }
+
+  function scheduleNextPop(){
+    if(!running) return;
+    const progress = Math.max(0, Math.min(1, (GAME_DURATION - timeLeft) / GAME_DURATION));
+    const delay = Math.max(260, 650 - progress * 350) + Math.random()*250;
+    popTimer = setTimeout(()=>{
+      popRandomHole();
+      scheduleNextPop();
+    }, delay);
+  }
+
+  function tickCountdown(){
+    timeLeft--;
+    updateHUD();
+    if(timeLeft <= 0){
+      endGame();
+    }
+  }
+
+  function endGame(){
+    running = false;
+    clearTimeout(popTimer);
+    clearInterval(countdownTimer);
+    holes.forEach(h=>{
+      clearTimeout(h.hideTimeout);
+      h.up = false;
+      h.el.classList.remove('up');
+    });
+    finalScoreEl.textContent = score;
+    endMsg.textContent = score >= 150
+      ? "Impressive, you have real ghost-hunter reflexes!"
+      : "Not bad! Try again to beat your score.";
+    endOverlay.classList.remove('hidden');
+  }
+
+  function startGame(){
+    startOverlay.classList.add('hidden');
+    endOverlay.classList.add('hidden');
+    buildBoard();
+    score = 0;
+    timeLeft = GAME_DURATION;
+    running = true;
+    updateHUD();
+    scheduleNextPop();
+    countdownTimer = setInterval(tickCountdown, 1000);
+  }
+
+  startBtn.addEventListener('click', startGame);
+  retryBtn.addEventListener('click', startGame);
+
+  buildBoard();
+})();
+</script>
+</body>
+</html>
