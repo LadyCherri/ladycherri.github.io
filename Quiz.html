@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9478029850185028" crossorigin="anonymous"></script>
+<!--
+  Copyright (c) 2026 Lady Cherri. All rights reserved.
+  This code is provided for viewing purposes only as part of ladycherri's
+  personal website. Copying, redistributing, or reusing this code (in whole
+  or in part) without prior written permission is not permitted.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Which Halloween Character Are You? — Lady Cherri</title>
+<meta name="description" content="Halloween quiz — answer 8 questions to find out which spooky character you really are.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&family=Quicksand:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+  :root{
+    --bg-deep:  #0c0816;
+    --bg-mid:   #1c1330;
+    --panel:    #1f1733;
+    --panel-2:  #140e24;
+    --line:     #05030a;
+    --pumpkin:  #ff7a1a;
+    --pumpkin-d:#d9560f;
+    --moon:     #f4ead0;
+    --ink:      #e9e2f2;
+    --slime:    #7de08d;
+    --mist:     #7a6f92;
+
+    --display: 'Silkscreen', monospace;
+    --body:    'Quicksand', sans-serif;
+    --mono:    'Space Mono', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    min-height:100vh;
+    background:
+      radial-gradient(circle at 85% 6%, rgba(244,234,208,.10), transparent 40%),
+      radial-gradient(circle at 10% 85%, rgba(255,122,26,.08), transparent 45%),
+      repeating-linear-gradient(0deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 26px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0px, rgba(255,255,255,.02) 1px, transparent 1px, transparent 26px),
+      linear-gradient(160deg, var(--bg-mid) 0%, var(--bg-deep) 100%);
+    color:var(--ink);
+    font-family:var(--body);
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0;
+    pointer-events:none;
+    background:repeating-linear-gradient(0deg, rgba(0,0,0,.06) 0px, rgba(0,0,0,.06) 1px, transparent 1px, transparent 3px);
+    z-index:50;
+  }
+
+  a{ color:inherit; }
+
+  .floaters{ position:fixed; inset:0; pointer-events:none; z-index:1; }
+  .floaters span{
+    position:absolute;
+    font-size:22px;
+    opacity:.4;
+    animation:drift 14s ease-in-out infinite;
+    filter:drop-shadow(0 0 6px rgba(255,122,26,.3));
+  }
+  .floaters span:nth-child(1){ top:8%;  left:6%;  animation-delay:0s;   font-size:16px; }
+  .floaters span:nth-child(2){ top:60%; left:3%;  animation-delay:3s;   font-size:24px; }
+  .floaters span:nth-child(3){ top:20%; right:7%; animation-delay:1.5s; font-size:20px; }
+  .floaters span:nth-child(4){ top:78%; right:10%;animation-delay:5s;   font-size:16px; }
+  @keyframes drift{ 0%,100%{ transform:translateY(0) rotate(0deg); } 50%{ transform:translateY(-22px) rotate(8deg); } }
+  @media (prefers-reduced-motion: reduce){ .floaters span{ animation:none; } }
+
+  main{
+    position:relative;
+    z-index:2;
+    max-width:600px;
+    margin:0 auto;
+    padding:48px 20px 70px;
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+
+  .window{
+    background:var(--panel);
+    border:3px solid var(--line);
+    box-shadow: 6px 6px 0 rgba(0,0,0,.4);
+    opacity:0;
+    transform:translateY(14px);
+    animation:rise .6s ease forwards;
+  }
+  .window:nth-of-type(2){ animation-delay:.1s; }
+  .window:nth-of-type(3){ animation-delay:.18s; }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+
+  .titlebar{
+    background:linear-gradient(90deg, var(--pumpkin) 0%, var(--pumpkin-d) 100%);
+    color:#1a0f00;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:7px 10px;
+    font-family:var(--mono);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:.06em;
+    border-bottom:3px solid var(--line);
+  }
+  .titlebar .name{ display:flex; align-items:center; gap:7px; }
+  .titlebar .name::before{ content:"🔮"; font-size:11px; }
+  .titlebar .btns{ display:flex; gap:5px; }
+  .titlebar .btns span{
+    width:14px; height:14px;
+    background:var(--panel-2);
+    color:var(--moon);
+    border:2px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+    font-size:9px; line-height:1;
+  }
+
+  .window-body{ padding:24px; }
+
+  .back-link{
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    font-family:var(--mono);
+    font-size:11px;
+    text-decoration:none;
+    color:var(--mist);
+    margin-bottom:12px;
+  }
+  .back-link:hover{ color:var(--pumpkin); }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--pumpkin);
+    margin:0 0 8px;
+  }
+  h1.pagetitle{
+    font-family:var(--display);
+    font-size:clamp(22px, 5.6vw, 32px);
+    color:var(--moon);
+    margin:0 0 8px;
+    line-height:1.2;
+    text-shadow:2px 2px 0 rgba(255,122,26,.35);
+  }
+  .lede{
+    font-size:15px;
+    line-height:1.55;
+    margin:0;
+    color:var(--ink);
+    max-width:48ch;
+  }
+
+  /* ---- Quiz panel ---- */
+  .quiz-window .window-body{ padding:22px; }
+
+  .view{ display:none; }
+  .view.active{ display:block; animation:fadein .3s ease; }
+  @keyframes fadein{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+  @media (prefers-reduced-motion: reduce){ .view.active{ animation:none; } }
+
+  .intro{ text-align:center; padding:10px 0 6px; }
+  .intro .big{ font-size:64px; line-height:1; margin-bottom:10px; }
+  .intro h2{
+    font-family:var(--display);
+    font-size:clamp(1.2rem, 5vw, 1.6rem);
+    color:var(--pumpkin);
+    margin:0 0 8px;
+  }
+  .intro p{
+    margin:0 auto 18px;
+    max-width:380px;
+    font-size:14.5px;
+    line-height:1.55;
+  }
+
+  .progress{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:16px;
+  }
+  .progress .bar{
+    flex:1;
+    height:12px;
+    background:var(--panel-2);
+    border:2px solid var(--line);
+    position:relative;
+    overflow:hidden;
+  }
+  .progress .fill{
+    position:absolute;
+    left:0; top:0; bottom:0;
+    width:0%;
+    background:repeating-linear-gradient(90deg, var(--pumpkin) 0px, var(--pumpkin) 8px, var(--pumpkin-d) 8px, var(--pumpkin-d) 10px);
+    transition:width .3s ease;
+  }
+  .progress .count{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:700;
+    color:var(--mist);
+    white-space:nowrap;
+  }
+
+  .question{
+    font-family:var(--display);
+    font-size:clamp(1.05rem, 4.6vw, 1.35rem);
+    line-height:1.35;
+    color:var(--moon);
+    margin:0 0 16px;
+  }
+
+  .answers{ display:flex; flex-direction:column; gap:10px; }
+  .answer{
+    text-align:left;
+    font-family:var(--body);
+    font-weight:600;
+    font-size:15px;
+    line-height:1.4;
+    color:var(--ink);
+    background:var(--panel-2);
+    border:2px solid var(--line);
+    padding:12px 14px;
+    cursor:pointer;
+    box-shadow:3px 3px 0 rgba(0,0,0,.4);
+    transition:transform .12s ease, box-shadow .12s ease, background .12s ease, border-color .12s ease;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+  }
+  .answer .key{
+    flex:0 0 auto;
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:700;
+    color:#1a0f00;
+    background:var(--pumpkin);
+    border:2px solid var(--line);
+    width:22px; height:22px;
+    display:flex; align-items:center; justify-content:center;
+    margin-top:1px;
+  }
+  .answer:hover{
+    transform:translate(-2px,-2px);
+    box-shadow:5px 5px 0 rgba(0,0,0,.45);
+    background:#2a1f47;
+    border-color:var(--pumpkin);
+  }
+  .answer:active{ transform:translate(0,0); box-shadow:1px 1px 0 rgba(0,0,0,.4); }
+
+  /* ---- Result ---- */
+  .result{ text-align:center; }
+  .result .emoji{
+    font-size:78px;
+    line-height:1;
+    margin:4px 0 8px;
+    filter:drop-shadow(0 0 14px rgba(255,122,26,.45));
+  }
+  .result .label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--mist);
+    margin:0 0 4px;
+  }
+  .result h2{
+    font-family:var(--display);
+    font-size:clamp(1.5rem, 6.5vw, 2.1rem);
+    color:var(--pumpkin);
+    margin:0 0 10px;
+    text-shadow:2px 2px 0 rgba(0,0,0,.4);
+  }
+  .result .desc{
+    margin:0 auto 14px;
+    max-width:420px;
+    font-size:15px;
+    line-height:1.6;
+  }
+  .traits{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    justify-content:center;
+    margin-bottom:16px;
+  }
+  .trait{
+    font-family:var(--mono);
+    font-size:11px;
+    font-weight:700;
+    color:var(--moon);
+    background:var(--panel-2);
+    border:2px solid var(--line);
+    padding:4px 10px;
+  }
+  .match-line{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--slime);
+    margin:0 0 18px;
+  }
+
+  .btn-row{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    flex-wrap:wrap;
+  }
+  .play-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    font-family:var(--mono);
+    font-weight:700;
+    font-size: 0.9rem;
+    color: #1a0f00;
+    background: var(--pumpkin);
+    border: 2px solid var(--line);
+    padding: 11px 20px;
+    cursor:pointer;
+    box-shadow: 3px 3px 0 rgba(0,0,0,.5);
+    transition: transform .12s ease, box-shadow .12s ease, background .12s ease;
+  }
+  .play-btn:hover{ background:var(--pumpkin-d); transform:translate(-2px,-2px); box-shadow:5px 5px 0 rgba(0,0,0,.5); }
+  .play-btn:active{ transform:translate(0,0); box-shadow:1px 1px 0 rgba(0,0,0,.5); }
+  .play-btn.ghost{
+    background:var(--panel-2);
+    color:var(--moon);
+  }
+  .play-btn.ghost:hover{ background:#2a1f47; }
+
+  .copy-note{
+    margin:12px 0 0;
+    min-height:16px;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--slime);
+  }
+
+  .ad-slot{
+    border:2px dashed var(--line);
+    background:rgba(255,255,255,.03);
+    color:var(--mist);
+    font-family:var(--mono);
+    font-size:11px;
+    text-align:center;
+    padding:18px;
+  }
+
+  footer{
+    text-align:center;
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--mist);
+    padding-top:4px;
+  }
+  footer .pumpkin-ic{ color:var(--pumpkin); }
+
+  @media (max-width:560px){
+    .window-body{ padding:18px; }
+    .quiz-window .window-body{ padding:16px; }
+    .answer{ font-size:14px; }
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--pumpkin);
+    outline-offset:2px;
+  }
+</style>
+</head>
+<body>
+
+  <div class="floaters" aria-hidden="true">
+    <span>🦇</span><span>👻</span><span>🕸️</span><span>🦇</span>
+  </div>
+
+  <main>
+
+    <header class="window">
+      <div class="titlebar">
+        <span class="name">QUIZ.EXE</span>
+        <span class="btns"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="window-body">
+        <a class="back-link" href="./ListeJeux.html">← back to mini games</a>
+        <p class="eyebrow">mini game · quiz</p>
+        <h1 class="pagetitle">Which Halloween Character Are You?</h1>
+        <p class="lede">Answer 8 quick questions and find out which spooky creature is hiding inside you.</p>
+      </div>
+    </header>
+
+    <!-- ==================== AD ZONE #1 ====================
+         Replace with your AdSense code. -->
+    <div class="ad-slot">ad space (728×90)</div>
+    <!-- ===================================================== -->
+
+    <section class="window quiz-window">
+      <div class="titlebar">
+        <span class="name">spooky-test.dat</span>
+        <span class="btns"><span>_</span><span>□</span><span>×</span></span>
+      </div>
+      <div class="window-body">
+
+        <!-- INTRO -->
+        <div class="view active" id="viewIntro">
+          <div class="intro">
+            <div class="big">🔮</div>
+            <h2>Ready to find out?</h2>
+            <p>No wrong answers. Just pick whatever feels the most you. It takes about a minute.</p>
+            <button class="play-btn" id="startBtn">🎃 Start the quiz</button>
+          </div>
+        </div>
+
+        <!-- QUESTION -->
+        <div class="view" id="viewQuestion">
+          <div class="progress">
+            <div class="bar"><div class="fill" id="progressFill"></div></div>
+            <span class="count" id="progressCount">1 / 8</span>
+          </div>
+          <h2 class="question" id="questionText"></h2>
+          <div class="answers" id="answers"></div>
+        </div>
+
+        <!-- RESULT -->
+        <div class="view" id="viewResult">
+          <div class="result">
+            <p class="label">you are...</p>
+            <div class="emoji" id="resEmoji"></div>
+            <h2 id="resName"></h2>
+            <p class="desc" id="resDesc"></p>
+            <div class="traits" id="resTraits"></div>
+            <p class="match-line" id="resMatch"></p>
+            <div class="btn-row">
+              <button class="play-btn" id="copyBtn">📋 Copy my result</button>
+              <button class="play-btn ghost" id="retryBtn">🔁 Retake quiz</button>
+            </div>
+            <p class="copy-note" id="copyNote"></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==================== AD ZONE #2 ====================
+         Replace with your AdSense code. -->
+    <div class="ad-slot" style="max-width:300px; margin:0 auto;">ad space (300×250)</div>
+    <!-- ===================================================== -->
+
+    <footer>
+      made with <span class="pumpkin-ic">🎃</span> by lady cherri
+    </footer>
+
+  </main>
+
+<script>
+(function(){
+
+  // ------------------------------------------------------------
+  // Characters. Each answer below points to one of these ids.
+  // ------------------------------------------------------------
+  const CHARACTERS = {
+    witch: {
+      emoji: '🧙', name: 'The Witch',
+      desc: "You're resourceful, creative and always have a plan (or a potion) ready. People come to you when things get weird, and you make the weird look good.",
+      traits: ['clever', 'creative', 'a little chaotic']
+    },
+    vampire: {
+      emoji: '🧛', name: 'The Vampire',
+      desc: "Elegant, dramatic and impossible to ignore. You walk into a room and the lighting just gets better. You love the finer things, and you know it.",
+      traits: ['charming', 'dramatic', 'stylish']
+    },
+    ghost: {
+      emoji: '👻', name: 'The Ghost',
+      desc: "Mysterious, a little mischievous and surprisingly gentle underneath. You appear right when people least expect it, and you leave them smiling (after the scream).",
+      traits: ['mysterious', 'playful', 'free spirit']
+    },
+    cat: {
+      emoji: '🐈‍⬛', name: 'The Black Cat',
+      desc: "Independent, curious and way smarter than you let on. You do things on your own terms, and everyone secretly hopes you'll sit on their lap.",
+      traits: ['independent', 'curious', 'cozy']
+    },
+    pumpkin: {
+      emoji: '🎃', name: 'The Jack-o\'-Lantern',
+      desc: "Warm, cheerful and the glow of every party. You make the spooky season feel like home, and people just feel better when you're around.",
+      traits: ['warm', 'cheerful', 'loyal']
+    },
+    skeleton: {
+      emoji: '💀', name: 'The Skeleton',
+      desc: "Fearless, funny and totally unbothered. Nothing rattles you (well, except your bones). You bring dry humor and zero drama to any situation.",
+      traits: ['fearless', 'funny', 'laid-back']
+    }
+  };
+
+  // ------------------------------------------------------------
+  // Questions. Each answer: [text, characterId]
+  // ------------------------------------------------------------
+  const QUESTIONS = [
+    { q: "What's your perfect Halloween night?", a: [
+      ["Brewing something bubbly in a cauldron", "witch"],
+      ["A fancy candlelit dinner party", "vampire"],
+      ["Floating around and giving people a fright", "ghost"],
+      ["Prowling the rooftops under a full moon", "cat"]
+    ]},
+    { q: "Pick a costume accessory:", a: [
+      ["A big glowing grin", "pumpkin"],
+      ["A good set of bones (rattling included)", "skeleton"],
+      ["Fluffy ears and a tail", "cat"],
+      ["A pointy hat, obviously", "witch"]
+    ]},
+    { q: "Your friends would describe you as...", a: [
+      ["Mysterious and a little sneaky", "ghost"],
+      ["Warm, cheerful and a bit goofy", "pumpkin"],
+      ["Elegant and dramatic", "vampire"],
+      ["Dry humor, zero fear", "skeleton"]
+    ]},
+    { q: "Favorite Halloween snack?", a: [
+      ["Whatever I managed to steal off someone's plate", "cat"],
+      ["Caramel apples, extra sticky", "witch"],
+      ["Candy corn, crunchy and unbothered", "skeleton"],
+      ["Pumpkin pie, obviously", "pumpkin"]
+    ]},
+    { q: "Where would you live?", a: [
+      ["A grand gothic castle", "vampire"],
+      ["A creaky old attic", "ghost"],
+      ["A cozy porch with lots of candles", "pumpkin"],
+      ["A cottage deep in the woods", "witch"]
+    ]},
+    { q: "How do you handle a scary movie?", a: [
+      ["I laugh. I've seen scarier.", "skeleton"],
+      ["Behind a cushion, ready to bolt", "cat"],
+      ["I'm the one scaring everyone else", "ghost"],
+      ["I critique the cinematography", "vampire"]
+    ]},
+    { q: "Pick a spooky sound:", a: [
+      ["Cackling laughter", "witch"],
+      ["Crunchy autumn leaves", "pumpkin"],
+      ["A midnight meow", "cat"],
+      ["A distant whisper", "ghost"]
+    ]},
+    { q: "What's your Halloween superpower?", a: [
+      ["Charm. Nobody says no to me.", "vampire"],
+      ["Bones of steel, nothing hurts me", "skeleton"],
+      ["A spell for every situation", "witch"],
+      ["Walking through walls", "ghost"]
+    ]}
+  ];
+
+  const KEYS = ['A', 'B', 'C', 'D'];
+
+  // ------------------------------------------------------------
+  // DOM
+  // ------------------------------------------------------------
+  const viewIntro = document.getElementById('viewIntro');
+  const viewQuestion = document.getElementById('viewQuestion');
+  const viewResult = document.getElementById('viewResult');
+  const startBtn = document.getElementById('startBtn');
+  const retryBtn = document.getElementById('retryBtn');
+  const copyBtn = document.getElementById('copyBtn');
+  const copyNote = document.getElementById('copyNote');
+  const progressFill = document.getElementById('progressFill');
+  const progressCount = document.getElementById('progressCount');
+  const questionText = document.getElementById('questionText');
+  const answersEl = document.getElementById('answers');
+
+  let current = 0;
+  let picks = [];       // character ids chosen, in order
+  let lastResult = null;
+
+  function show(view){
+    [viewIntro, viewQuestion, viewResult].forEach(v => v.classList.remove('active'));
+    view.classList.add('active');
+  }
+
+  function shuffled(arr){
+    const a = arr.slice();
+    for(let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function renderQuestion(){
+    const item = QUESTIONS[current];
+    questionText.textContent = item.q;
+    progressCount.textContent = (current + 1) + ' / ' + QUESTIONS.length;
+    progressFill.style.width = (current / QUESTIONS.length * 100) + '%';
+
+    answersEl.innerHTML = '';
+    shuffled(item.a).forEach((ans, i) => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'answer';
+      const key = document.createElement('span');
+      key.className = 'key';
+      key.textContent = KEYS[i];
+      const label = document.createElement('span');
+      label.textContent = ans[0];
+      btn.appendChild(key);
+      btn.appendChild(label);
+      btn.addEventListener('click', () => choose(ans[1]));
+      answersEl.appendChild(btn);
+    });
+  }
+
+  function choose(charId){
+    picks.push(charId);
+    current++;
+    if(current >= QUESTIONS.length){
+      progressFill.style.width = '100%';
+      showResult();
+    } else {
+      renderQuestion();
+    }
+  }
+
+  function computeResult(){
+    const counts = {};
+    picks.forEach(id => counts[id] = (counts[id] || 0) + 1);
+    const max = Math.max.apply(null, Object.values(counts));
+    // Tie-break: the tied character picked most recently wins
+    for(let i = picks.length - 1; i >= 0; i--){
+      if(counts[picks[i]] === max){
+        return { id: picks[i], count: max };
+      }
+    }
+  }
+
+  function showResult(){
+    const r = computeResult();
+    const c = CHARACTERS[r.id];
+    lastResult = c;
+
+    document.getElementById('resEmoji').textContent = c.emoji;
+    document.getElementById('resName').textContent = c.name;
+    document.getElementById('resDesc').textContent = c.desc;
+
+    const traitsEl = document.getElementById('resTraits');
+    traitsEl.innerHTML = '';
+    c.traits.forEach(t => {
+      const s = document.createElement('span');
+      s.className = 'trait';
+      s.textContent = t;
+      traitsEl.appendChild(s);
+    });
+
+    const pct = Math.round(r.count / QUESTIONS.length * 100);
+    document.getElementById('resMatch').textContent = pct + '% match (' + r.count + ' of ' + QUESTIONS.length + ' answers)';
+    copyNote.textContent = '';
+    show(viewResult);
+  }
+
+  function startQuiz(){
+    current = 0;
+    picks = [];
+    lastResult = null;
+    renderQuestion();
+    show(viewQuestion);
+  }
+
+  function copyResult(){
+    if(!lastResult) return;
+    const text = 'I got ' + lastResult.name + ' ' + lastResult.emoji +
+      ' on the Which Halloween Character Are You quiz! Try it: ' + window.location.href;
+
+    function done(ok){
+      copyNote.textContent = ok ? 'Copied! Paste it anywhere ♡' : 'Could not copy automatically. Select and copy this: ' + text;
+    }
+
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(() => done(true), () => done(false));
+    } else {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      let ok = false;
+      try { ok = document.execCommand('copy'); } catch(e) {}
+      document.body.removeChild(ta);
+      done(ok);
+    }
+  }
+
+  startBtn.addEventListener('click', startQuiz);
+  retryBtn.addEventListener('click', startQuiz);
+  copyBtn.addEventListener('click', copyResult);
+})();
+</script>
+</body>
+</html>
